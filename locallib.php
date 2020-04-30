@@ -21,3 +21,31 @@
  * @copyright  2020 onwards Solent University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+// get user type (staff or student)
+
+function get_user_type() {
+	global $DB, $USER;
+	$department = $DB->get_records_sql("SELECT department from {user} WHERE id = " . $USER->id)
+
+	return $department;
+}
+
+
+// get student courses
+// TODO rename this
+
+function get_student_courses(){
+  global $DB, $USER;
+
+  $courses = $DB->get_records_sql("SELECT DISTINCT e.courseid, c.shortname, c.fullname, c.startdate, c.enddate, cc.name categoryname
+                                  FROM {enrol} e
+                                  JOIN {user_enrolments} ue ON ue.enrolid = e.id AND ue.userid = ?
+                                  JOIN {course} c ON c.id = e.courseid
+                                  JOIN {course_categories} cc ON cc.id = c.category
+                                  WHERE ue.status = 0 AND e.status = 0 AND ue.timestart < UNIX_TIMESTAMP()
+                                  AND (ue.timeend = 0 OR ue.timeend > UNIX_TIMESTAMP())
+                                  AND ue.userid = ?
+                                  AND cc.name ='Course pages' OR cc.name = 'unit pages'" , array($USER->id, $USER->id));
+  return $courses;
+}

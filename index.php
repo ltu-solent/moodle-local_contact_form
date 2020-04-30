@@ -26,7 +26,7 @@
 require_once('../../config.php');
 require_once("$CFG->libdir/formslib.php");
 require_once('locallib.php');
-require_once('contact_form.php');
+require_once('form.php');
 
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url('/local/contact_form/index.php');
@@ -41,9 +41,20 @@ $PAGE->set_heading($USER->firstname . ' ' . $USER->lastname . ' - ' . get_string
 }
 
 echo $OUTPUT->header();
+        // TODO make 2 separate forms for students and staff
+        // check here if the're staff or student and display the appropriate form
+// look at apprenticeoffjob edit and delete forms 
+// load in index.php
+//call to user table -> department
 
-//Instantiate form 
-$mform = new local_contact_form();
+// either student or academic - staff may be more generic
+
+// Find out if they're a student
+
+// if they are, 
+
+// Instantiate the studentform 
+$mform = new student_form();
 
 //Form processing and displaying is done here
 if ($mform->is_cancelled()) {
