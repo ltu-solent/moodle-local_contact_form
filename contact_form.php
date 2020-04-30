@@ -60,7 +60,6 @@ class local_contact_form extends moodleform {
        // IMPORTANT: add validation and type rules as per documentation
             // Add the assignment name
 
-            // $mform->addElement('html', '<h3>' . $assign->name. '</h3><br />');
 
         	$mform->addElement('advcheckbox', 'querytype', $querytype, 'Label displayed after checkbox', array('group' => 1), array(0, 1));
 
