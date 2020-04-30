@@ -32,7 +32,6 @@ $PAGE->set_context(context_system::instance());
 $PAGE->set_url('/local/contact_form/index.php');
 $PAGE->set_pagelayout('report');
 $PAGE->set_title(get_string('pluginname', 'local_contact_form'));
-
 global $PAGE, $USER;
 
 if (isloggedin() && $USER->id != 1) {
