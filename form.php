@@ -32,13 +32,14 @@ class student_form extends moodleform {
         global $CFG, $USER, $DB;
 
         $courses = get_student_courses();
+        $querytypes = array("Acess/account/password", "Assessment", "Enrollment", "Other");
 // start the form
         $mform = $this->_form; // Don't forget the underscore! 
         foreach($querytypes as $querytype) {
        // IMPORTANT: add validation and type rules as per documentation
             // Add the assignment name
 
-        	$mform->addElement('advcheckbox', 'querytype', $querytype, 'Label displayed after checkbox', array('group' => 1), array(0, 1));
+        	$mform->addElement('advcheckbox', 'querytype', '', $querytype, array('group' => 1), array(0, 1));
  
     }
 

@@ -26,7 +26,7 @@
 
 function get_user_type() {
 	global $DB, $USER;
-	$department = $DB->get_records_sql("SELECT department from {user} WHERE id = " . $USER->id);
+	$department = $DB->get_records_sql("SELECT department from {user} WHERE id = ?" . array($USER->id));
 
 	return $department;
 }
