@@ -34,6 +34,11 @@ class student_form extends moodleform {
         global $CFG, $USER, $DB;
 
         $courses = get_student_courses();
+        // foreach ($courses as $course => $data) {
+        	// print_r($course);
+        // 	print_r($data->fullname);
+        // 	print('x');
+        // }1111111111
         $querytypes = array("Access/account/password", "Assessment", "Enrollment", "Other");
 // start the form
         $mform = $this->_form; // Don't forget the underscore! 
@@ -43,12 +48,19 @@ class student_form extends moodleform {
 
         	$mform->addElement('advcheckbox', 'querytype', '', $querytype, array('group' => 1), array(0, 1));
  
-    }
-    print_r($courses);
+    	}
 
 
 // add current modules here in a dropdown
-
+    	$coursenames = array();
+        $courses = get_student_courses();
+        foreach ($courses as $course => $data) {
+        	// array_push($coursenames, $data->fullname);
+        	$coursenames[$course] = $data->fullname;
+        }
+        // print_r($coursenames);
+        
+        $mform->addElement('select', 'courselist', get_string('courselistlabel', 'local_contact_form'), $coursenames);
         // Add comments section
         $mform->addElement('textarea', 'comments', get_string('description', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
 
