@@ -26,13 +26,15 @@
 
 require_once("$CFG->libdir/formslib.php");
 
+
+
 class student_form extends moodleform {
     //Add elements to formif
     public function definition() {
         global $CFG, $USER, $DB;
 
         $courses = get_student_courses();
-        $querytypes = array("Acess/account/password", "Assessment", "Enrollment", "Other");
+        $querytypes = array("Access/account/password", "Assessment", "Enrollment", "Other");
 // start the form
         $mform = $this->_form; // Don't forget the underscore! 
         foreach($querytypes as $querytype) {
@@ -42,7 +44,10 @@ class student_form extends moodleform {
         	$mform->addElement('advcheckbox', 'querytype', '', $querytype, array('group' => 1), array(0, 1));
  
     }
+    print_r($courses);
 
+
+// add current modules here in a dropdown
 
         // Add comments section
         $mform->addElement('textarea', 'comments', get_string('description', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
