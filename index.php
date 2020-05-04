@@ -62,6 +62,21 @@ if ($mform->is_cancelled()) {
 } else if ($fromform = $mform->get_data()) {
   //In this case you process validated data. $mform->get_data() returns data posted in form.
 	var_dump($fromform);
+
+$courseid = (int)$fromform->courselist;
+	
+
+	$message['body'] = $fromform->comments;
+	$message['fromemail'] = $USER->email;
+	$message['emailto'] = 'abc@abc.com'; // TODO get this from the settings
+	$message['subject'] = get_course_fullname($courseid);
+
+// print('x' . $courseid . 'x');
+
+	
+
+
+	create_message($message);
 } else {
   // this branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
   // or on the first display of the form.

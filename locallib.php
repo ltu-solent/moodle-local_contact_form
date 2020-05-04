@@ -49,3 +49,26 @@ function get_student_courses(){
                                   AND cc.name ='Course pages' OR cc.name = 'unit pages'" , array($USER->id, $USER->id));
   return $courses;
 }
+
+function create_message($message) {
+	$messagebody = $message['body'];
+	$to = $message['emailto'];
+	$subject = $message['subject'];
+// 	$subject = $message['courseid' . ' ' . $message['coursename']];
+	
+	$headers = "From: " . $message['fromemail'] . "\r\n";
+// 	$headers .= "Reply-To: " . get_config('local_quercus_tasks', 'senderrorto') . "\r\n";
+// 	$headers .= "MIME-Version: 1.0\r\n";
+// 	$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+// 	// mail($to, $subject, $messagebody, $headers);
+	// var_dump($to, $subject, $messagebody, $headers);
+	var_dump($to, $subject, $messagebody, $headers);
+
+// 				// $message = null;
+}
+
+function get_course_fullname($course){
+	global $DB, $USER;
+	$coursefullname = $DB->get_field('course', 'fullname', array('id = ' . $course));
+	return $coursefullname;
+}

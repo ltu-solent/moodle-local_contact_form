@@ -32,6 +32,7 @@ class student_form extends moodleform {
     //Add elements to formif
     public function definition() {
         global $CFG, $USER, $DB;
+        
 
         $courses = get_student_courses();
         // foreach ($courses as $course => $data) {
