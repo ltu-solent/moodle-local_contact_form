@@ -64,12 +64,20 @@ if ($mform->is_cancelled()) {
 	var_dump($fromform);
 
 $courseid = (int)$fromform->courselist;
-	
 
+
+	// $message['body'] = 
+// TODO put the course in the body too
 	$message['body'] = $fromform->comments;
+	$message['body'] .= "\r\n";
+	$message['body'] .= "Course " . $fromform->courselist;
 	$message['fromemail'] = $USER->email;
 	$message['emailto'] = 'abc@abc.com'; // TODO get this from the settings
-	$message['subject'] = get_course_fullname($courseid);
+
+//get which boxes are checked
+	// if(isset($fromform->substr()))
+
+	$message['subject'] = '';
 
 // print('x' . $courseid . 'x');
 

@@ -53,7 +53,7 @@ function get_student_courses(){
 function create_message($message) {
 	$messagebody = $message['body'];
 	$to = $message['emailto'];
-	$subject = $message['subject'];
+	// $subject = $message['subject'];
 // 	$subject = $message['courseid' . ' ' . $message['coursename']];
 	
 	$headers = "From: " . $message['fromemail'] . "\r\n";
@@ -65,10 +65,4 @@ function create_message($message) {
 	var_dump($to, $subject, $messagebody, $headers);
 
 // 				// $message = null;
-}
-
-function get_course_fullname($course){
-	global $DB, $USER;
-	$coursefullname = $DB->get_field('course', 'fullname', array('id = ' . $course));
-	return $coursefullname;
 }

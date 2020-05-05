@@ -32,7 +32,7 @@ class student_form extends moodleform {
     //Add elements to formif
     public function definition() {
         global $CFG, $USER, $DB;
-        
+
 
         $courses = get_student_courses();
         // foreach ($courses as $course => $data) {
@@ -47,7 +47,7 @@ class student_form extends moodleform {
        // IMPORTANT: add validation and type rules as per documentation
             // Add the assignment name
 
-        	$mform->addElement('advcheckbox', 'querytype', '', $querytype, array('group' => 1), array(0, 1));
+        	$mform->addElement('advcheckbox', 'querytype' . '_'.$querytype, $querytype,'', '', array(0, 1));
  
     	}
 
@@ -57,7 +57,7 @@ class student_form extends moodleform {
         $courses = get_student_courses();
         foreach ($courses as $course => $data) {
         	// array_push($coursenames, $data->fullname);
-        	$coursenames[$course] = $data->fullname;
+        	$coursenames[$data->shortname] = $data->fullname;
         }
         // print_r($coursenames);
         
