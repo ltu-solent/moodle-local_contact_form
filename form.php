@@ -42,13 +42,13 @@ class student_form extends moodleform {
         // }1111111111
         $querytypes = array("Access/account/password", "Assessment", "Enrollment", "Other");
 // start the form
-        $mform = $this->_form; // Don't forget the underscore! 
+        $mform = $this->_form; // Don't forget the underscore!
         foreach($querytypes as $querytype) {
        // IMPORTANT: add validation and type rules as per documentation
             // Add the assignment name
 
-        	$mform->addElement('advcheckbox', 'querytype' . '_'.$querytype, $querytype,'', '', array(0, 1));
- 
+        	//$mform->addElement('advcheckbox', 'querytype' . '_'.$querytype, $querytype,'', '', array(0, 1));
+          $mform->addElement('checkbox', $querytype, $querytype);
     	}
 
 
@@ -60,18 +60,18 @@ class student_form extends moodleform {
         	$coursenames[$data->shortname] = $data->fullname;
         }
         // print_r($coursenames);
-        
+
         $mform->addElement('select', 'courselist', get_string('courselistlabel', 'local_contact_form'), $coursenames);
         // Add comments section
         $mform->addElement('textarea', 'comments', get_string('description', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
 
-        $this->add_action_buttons($cancel=true, $submitlabel=get_string('savechanges', 'local_contact_form'));    
+        $this->add_action_buttons($cancel=true, $submitlabel=get_string('savechanges', 'local_contact_form'));
 
-        
+
 
         // $mform->addElement('text', 'email', get_string('email')); // Add elements to your form
         // $mform->setType('email', PARAM_NOTAGS);                   //Set type of element
-        
+
     }
     //Custom validation should be added here
     function validation($data, $files) {
@@ -83,9 +83,9 @@ class staff_form extends moodleform {
     //Add elements to formif
     public function definition() {
         global $CFG, $USER, $DB;
-        
+
 // start the form
-                $mform = $this->_form; // Don't forget the underscore! 
+                $mform = $this->_form; // Don't forget the underscore!
 
     //Custom validation should be added here
     function validation($data, $files) {
