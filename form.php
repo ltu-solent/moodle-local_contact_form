@@ -43,14 +43,14 @@ class student_form extends moodleform {
         $querytypes = array("Access/account/password", "Assessment", "Enrollment", "Other");
 // start the form
         $mform = $this->_form; // Don't forget the underscore!
+
+        $checkarray=array();
+
         foreach($querytypes as $querytype) {
-       // IMPORTANT: add validation and type rules as per documentation
-            // Add the assignment name
-
-        	//$mform->addElement('advcheckbox', 'querytype' . '_'.$querytype, $querytype,'', '', array(0, 1));
-          $mform->addElement('checkbox', $querytype, $querytype);
-    	}
-
+          // IMPORTANT: add validation and type rules as per documentation
+          $checkarray[] = $mform->createElement('checkbox', 'querytype_' . $querytype, $querytype);
+        }
+        $mform->addGroup($checkarray, 'checkar', '', array(' '), false);
 
 // add current modules here in a dropdown
     	$coursenames = array();
