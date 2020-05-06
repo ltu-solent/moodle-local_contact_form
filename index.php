@@ -41,6 +41,8 @@ $PAGE->set_heading($USER->firstname . ' ' . $USER->lastname . ' - ' . get_string
 }
 
 echo $OUTPUT->header();
+
+// var_dump($_SERVER); // get the http_referrer, ip address from here
         // TODO make 2 separate forms for students and staff
         // check here if the're staff or student and display the appropriate form
 // look at apprenticeoffjob edit and delete forms 
@@ -61,7 +63,9 @@ if ($mform->is_cancelled()) {
     //Handle form cancel operation, if cancel button is present on form
 } else if ($fromform = $mform->get_data()) {
   //In this case you process validated data. $mform->get_data() returns data posted in form.
-	var_dump($fromform);
+	// print_object($fromform);
+
+	$queryvar = "querytype_";
 
 $courseid = (int)$fromform->courselist;
 
@@ -71,13 +75,24 @@ $courseid = (int)$fromform->courselist;
 	$message['body'] = $fromform->comments;
 	$message['body'] .= "\r\n";
 	$message['body'] .= "Course " . $fromform->courselist;
+	$message['body'] .= "\r\n";
+	$message['body'] .= "IP Address: " . $_SERVER['HTTP_HOST'];
+	$message['body'] .= "\r\n";
+	$message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
+
 	$message['fromemail'] = $USER->email;
 	$message['emailto'] = 'abc@abc.com'; // TODO get this from the settings
 
 //get which boxes are checked
-	// if(isset($fromform->substr()))
+
+
+	foreach ($fromform as $form=>$alues) {
+		print_object($form);
+	}
 
 	$message['subject'] = '';
+
+	print_object($message);
 
 // print('x' . $courseid . 'x');
 
