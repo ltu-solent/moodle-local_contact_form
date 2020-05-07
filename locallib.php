@@ -60,9 +60,9 @@ function create_message($message) {
 // 	$headers .= "Reply-To: " . get_config('local_quercus_tasks', 'senderrorto') . "\r\n";
 // 	$headers .= "MIME-Version: 1.0\r\n";
 // 	$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-// 	// mail($to, $subject, $messagebody, $headers);
+	mail($to, $subject, $messagebody, $headers);
 	// var_dump($to, $subject, $messagebody, $headers);
-	var_dump($to, $subject, $messagebody, $headers);
+	// var_dump($to, $subject, $messagebody, $headers);
 
 // 				// $message = null;
 }
