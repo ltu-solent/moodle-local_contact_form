@@ -63,9 +63,8 @@ if ($mform->is_cancelled()) {
     //Handle form cancel operation, if cancel button is present on form
 } else if ($fromform = $mform->get_data()) {
   //In this case you process validated data. $mform->get_data() returns data posted in form.
-	// print_object($fromform);
 
-	// $queryvar = "querytype_";
+	// TODO move this all into locallib
 
 $courseid = (int)$fromform->courselist;
 
@@ -81,30 +80,20 @@ $courseid = (int)$fromform->courselist;
 	$message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
 	$message['subject'] = "";
 	$message['fromemail'] = $USER->email;
-	$message['emailto'] = 'catherine.newman@solent.ac.uk'; // TODO get this from the settings
+	// $message['emailto'] = 'catherine.newman@solent.ac.uk'; // TODO get this from the settings
+	$message['emailto'] = 'abc@123.com';
 
 //get which boxes are checked
 
 	$subject = "";
 	foreach ($fromform as $form=>$values) {
-		// print_object($form);
-		// print(strtok($form, '_'));
-if( ($x_pos = strpos($form, '_')) !== FALSE )
-   $message['subject'] .= substr($form, $x_pos + 1) . ' ';
+	if( ($x_pos = strpos($form, '_')) !== FALSE )
+   	$message['subject'] .= substr($form, $x_pos + 1) . ' ';
 
 
 
 	}
-	// print($subject);
-//
-	// $message['subject'] = '';
-
 	print_object($message);
-
-// print('x' . $courseid . 'x');
-
-
-
 
 	create_message($message);
 } else {
