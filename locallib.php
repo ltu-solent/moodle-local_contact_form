@@ -53,7 +53,7 @@ function get_student_courses(){
 function create_message($message) {
 	$messagebody = $message['body'];
 	$to = $message['emailto'];
-	// $subject = $message['subject'];
+	$subject = $message['subject'];
 // 	$subject = $message['courseid' . ' ' . $message['coursename']];
 	
 	$headers = "From: " . $message['fromemail'] . "\r\n";

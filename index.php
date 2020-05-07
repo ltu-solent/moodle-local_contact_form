@@ -65,7 +65,7 @@ if ($mform->is_cancelled()) {
   //In this case you process validated data. $mform->get_data() returns data posted in form.
 	// print_object($fromform);
 
-	$queryvar = "querytype_";
+	// $queryvar = "querytype_";
 
 $courseid = (int)$fromform->courselist;
 
@@ -79,18 +79,25 @@ $courseid = (int)$fromform->courselist;
 	$message['body'] .= "IP Address: " . $_SERVER['HTTP_HOST'];
 	$message['body'] .= "\r\n";
 	$message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
-
+	$message['subject'] = "";
 	$message['fromemail'] = $USER->email;
 	$message['emailto'] = 'abc@abc.com'; // TODO get this from the settings
 
 //get which boxes are checked
 
+	$subject = "";
+	foreach ($fromform as $form=>$values) {
+		// print_object($form);
+		// print(strtok($form, '_'));
+if( ($x_pos = strpos($form, '_')) !== FALSE )
+   $message['subject'] .= substr($form, $x_pos + 1) . ' ';
 
-	foreach ($fromform as $form=>$alues) {
-		print_object($form);
+
+
 	}
-
-	$message['subject'] = '';
+	// print($subject);
+// 
+	// $message['subject'] = '';
 
 	print_object($message);
 
