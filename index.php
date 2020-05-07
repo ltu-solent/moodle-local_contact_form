@@ -56,7 +56,7 @@ echo $OUTPUT->header();
 // if they are, 
 
 // Instantiate the studentform 
-$mform = new student_form();
+$mform = new enquiryform();
 
 //Form processing and displaying is done here
 if ($mform->is_cancelled()) {

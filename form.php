@@ -28,19 +28,30 @@ require_once("$CFG->libdir/formslib.php");
 
 
 
-class student_form extends moodleform {
+class enquiryform extends moodleform {
     //Add elements to formif
     public function definition() {
         global $CFG, $USER, $DB;
 
 
-        $courses = get_student_courses();
-        // foreach ($courses as $course => $data) {
-        	// print_r($course);
-        // 	print_r($data->fullname);
-        // 	print('x');
-        // }1111111111
-        $querytypes = array("Access/account/password", "Assessment", "Enrollment", "Other");
+        // print(key($usertype));
+
+// 
+        // print_r($usertype);
+
+        // if (key($usertype) == $student) {
+// check if they're a studeent
+        // see https://moodle.org/mod/forum/discuss.php?d=257611
+
+        if (user_has_role_assignment($USER->id,5)){
+            $courses = get_student_courses();
+            $querytypes = array("Access/account/password", "Assessment", "Enrollment", "Other");
+            
+        } else { // for now, they're staff
+            $querytypes = array("Assessment link missing/dates incorrect", "Assessment other", "Unit leader enrolment", "Other");
+        }
+        // print_object($usertype);
+
 // start the form
         $mform = $this->_form; // Don't forget the underscore!
 
@@ -53,11 +64,13 @@ class student_form extends moodleform {
         $mform->addGroup($checkarray, 'checkar', '', array(' '), false);
 
 // add current modules here in a dropdown
-    	$coursenames = array();
-        $courses = get_student_courses();
-        foreach ($courses as $course => $data) {
-        	// array_push($coursenames, $data->fullname);
-        	$coursenames[$data->shortname] = $data->fullname;
+         if (user_has_role_assignment($USER->id,5)){
+        	$coursenames = array();
+            // $courses = get_student_courses();
+            foreach ($courses as $course => $data) {
+        	   // array_push($coursenames, $data->fullname);
+        	   $coursenames[$data->shortname] = $data->fullname;
+            }
         }
         // print_r($coursenames);
 
