@@ -36,17 +36,18 @@ class enquiryform extends moodleform {
 
         // print(key($usertype));
 
-// 
+//
         // print_r($usertype);
 
         // if (key($usertype) == $student) {
 // check if they're a studeent
         // see https://moodle.org/mod/forum/discuss.php?d=257611
 
-        if (user_has_role_assignment($USER->id,5)){
+        //if (user_has_role_assignment($USER->id,5)){
+        if(get_user_type() == 'student'){
             $courses = get_student_courses();
             $querytypes = array("Access/account/password", "Assessment", "Enrollment", "Other");
-            
+
         } else { // for now, they're staff
             $querytypes = array("Assessment link missing/dates incorrect", "Assessment other", "Unit leader enrolment", "Other");
         }
@@ -64,17 +65,18 @@ class enquiryform extends moodleform {
         $mform->addGroup($checkarray, 'checkar', '', array(' '), false);
 
 // add current modules here in a dropdown
-         if (user_has_role_assignment($USER->id,5)){
+         if(get_user_type() == 'student'){
         	$coursenames = array();
             // $courses = get_student_courses();
             foreach ($courses as $course => $data) {
         	   // array_push($coursenames, $data->fullname);
         	   $coursenames[$data->shortname] = $data->fullname;
             }
-        }
+
         // print_r($coursenames);
 
-        $mform->addElement('select', 'courselist', get_string('courselistlabel', 'local_contact_form'), $coursenames);
+          $mform->addElement('select', 'courselist', get_string('courselistlabel', 'local_contact_form'), $coursenames);
+        }
         // Add comments section
         $mform->addElement('textarea', 'comments', get_string('description', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
 
