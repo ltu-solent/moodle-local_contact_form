@@ -43,19 +43,15 @@ class enquiryform extends moodleform {
 // check if they're a studeent
         // see https://moodle.org/mod/forum/discuss.php?d=257611
 
-        //if (user_has_role_assignment($USER->id,5)){
         if(get_user_type() == 'student'){
             $courses = get_student_courses();
             $querytypes = array("Access/account/password", "Assessment", "Enrollment", "Other");
-
         } else { // for now, they're staff
             $querytypes = array("Assessment link missing/dates incorrect", "Assessment other", "Unit leader enrolment", "Other");
         }
-        // print_object($usertype);
 
 // start the form
         $mform = $this->_form; // Don't forget the underscore!
-
         $checkarray=array();
 
         foreach($querytypes as $querytype) {
@@ -66,14 +62,10 @@ class enquiryform extends moodleform {
 
 // add current modules here in a dropdown
          if(get_user_type() == 'student'){
-        	$coursenames = array();
-            // $courses = get_student_courses();
+        	  $coursenames = array();
             foreach ($courses as $course => $data) {
-        	   // array_push($coursenames, $data->fullname);
         	   $coursenames[$data->shortname] = $data->fullname;
-            }
-
-        // print_r($coursenames);
+          }
 
           $mform->addElement('select', 'courselist', get_string('courselistlabel', 'local_contact_form'), $coursenames);
         }

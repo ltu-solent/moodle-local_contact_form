@@ -26,9 +26,9 @@
 
 function get_user_type() {
 	global $DB, $USER;
-	$department = $DB->get_records_sql("SELECT department from {user} WHERE id = ?", array($USER->id));
+	$department = $DB->get_record_sql("SELECT department from {user} WHERE id = ?", array($USER->id));
 
-	return $department;
+	return $department->department;
 }
 
 
@@ -55,7 +55,7 @@ function create_message($message) {
 	$to = $message['emailto'];
 	$subject = $message['subject'];
 // 	$subject = $message['courseid' . ' ' . $message['coursename']];
-	
+
 	$headers = "From: " . $message['fromemail'] . "\r\n";
 // 	$headers .= "Reply-To: " . get_config('local_quercus_tasks', 'senderrorto') . "\r\n";
 // 	$headers .= "MIME-Version: 1.0\r\n";

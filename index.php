@@ -45,7 +45,7 @@ echo $OUTPUT->header();
 // var_dump($_SERVER); // get the http_referrer, ip address from here
         // TODO make 2 separate forms for students and staff
         // check here if the're staff or student and display the appropriate form
-// look at apprenticeoffjob edit and delete forms 
+// look at apprenticeoffjob edit and delete forms
 // load in index.php
 //call to user table -> department
 
@@ -53,9 +53,9 @@ echo $OUTPUT->header();
 
 // Find out if they're a student
 
-// if they are, 
+// if they are,
 
-// Instantiate the studentform 
+// Instantiate the studentform
 $mform = new enquiryform();
 
 //Form processing and displaying is done here
@@ -70,7 +70,7 @@ if ($mform->is_cancelled()) {
 $courseid = (int)$fromform->courselist;
 
 
-	// $message['body'] = 
+	// $message['body'] =
 // TODO put the course in the body too
 	$message['body'] = $fromform->comments;
 	$message['body'] .= "\r\n";
@@ -81,7 +81,7 @@ $courseid = (int)$fromform->courselist;
 	$message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
 	$message['subject'] = "";
 	$message['fromemail'] = $USER->email;
-	$message['emailto'] = 'abc@abc.com'; // TODO get this from the settings
+	$message['emailto'] = 'catherine.newman@solent.ac.uk'; // TODO get this from the settings
 
 //get which boxes are checked
 
@@ -96,14 +96,14 @@ if( ($x_pos = strpos($form, '_')) !== FALSE )
 
 	}
 	// print($subject);
-// 
+//
 	// $message['subject'] = '';
 
 	print_object($message);
 
 // print('x' . $courseid . 'x');
 
-	
+
 
 
 	create_message($message);
