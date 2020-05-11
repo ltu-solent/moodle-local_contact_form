@@ -98,6 +98,8 @@ class loggedoutform extends moodleform {
                 // Add comments section
         $mform->addElement('textarea', 'problem', get_string('problem', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
 
+                $mform->addElement('recaptcha', 'recaptcha', 'RECAPTCHA');
+
 
         // add the send button
         $this->add_action_buttons($cancel=true, $submitlabel=get_string('savechanges', 'local_contact_form'));
