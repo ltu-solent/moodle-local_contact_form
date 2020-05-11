@@ -93,7 +93,7 @@ $courseid = (int)$fromform->courselist;
 
 
 	}
-	print_object($message);
+	// print_object($message);
 
 	create_message($message);
 } else {

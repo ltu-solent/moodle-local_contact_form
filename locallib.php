@@ -61,6 +61,7 @@ function create_message($message) {
 // 	$headers .= "MIME-Version: 1.0\r\n";
 // 	$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 	mail($to, $subject, $messagebody, $headers);
+  redirect($CFG->wwwroot. '/local/contact_form/index.php', get_string('messagesent', 'local_contact_form'), 15);
 	// var_dump($to, $subject, $messagebody, $headers);
 	// var_dump($to, $subject, $messagebody, $headers);
 
