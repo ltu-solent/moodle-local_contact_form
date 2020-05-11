@@ -90,6 +90,13 @@ class loggedoutform extends moodleform {
         $mform = $this->_form; // Don't forget the underscore!
         $mform->addElement('text', 'name', get_string('name',  'local_contact_form'));
         $mform->setType('name', PARAM_TEXT );
+        $mform->addElement('text', 'email', get_string('email',  'local_contact_form'));
+        $mform->setType('email', PARAM_TEXT );
+        $mform->addElement('text', 'phone', get_string('phone',  'local_contact_form'));
+        $mform->setType('phone', PARAM_TEXT );
+
+                // Add comments section
+        $mform->addElement('textarea', 'problem', get_string('problem', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
 
 
         // add the send button
