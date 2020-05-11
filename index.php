@@ -56,6 +56,7 @@ echo $OUTPUT->header();
 // if they are,
 
 // Instantiate the studentform
+if (isloggedin() && $USER->id != 1) {
 $mform = new enquiryform();
 
 //Form processing and displaying is done here
@@ -117,7 +118,30 @@ if ($mform->is_cancelled()) {
   //displays the form
   $mform->display();
 }
+} else { // display the logged out form
 
+	$mform = new loggedoutform();
+
+	//Form processing and displaying is done here
+	if ($mform->is_cancelled()) {
+	    //Handle form cancel operation, if cancel button is present on form
+	} else if ($fromform = $mform->get_data()) {
+print_object($fromform);
+
+	  //In this case you process validated data. $mform->get_data() returns data posted in form.
+	} else {
+	  // this branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
+	  // or on the first display of the form.
+
+	  //Set default data (if any)
+		$toform="";
+	  $mform->set_data($toform);
+	  //displays the form
+	  $mform->display();
+	}
+
+
+}
 
 
 

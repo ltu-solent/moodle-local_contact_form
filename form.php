@@ -34,14 +34,9 @@ class enquiryform extends moodleform {
         global $CFG, $USER, $DB;
 
 
-        // print(key($usertype));
+// Check if they're logged in, if not do the non logged in form
 
-//
-        // print_r($usertype);
-
-        // if (key($usertype) == $student) {
-// check if they're a studeent
-        // see https://moodle.org/mod/forum/discuss.php?d=257611
+// else do the staff/student form
 
         if(get_user_type() == 'student'){
             $courses = get_student_courses();
@@ -86,13 +81,19 @@ class enquiryform extends moodleform {
     }
 }
 
-class staff_form extends moodleform {
+class loggedoutform extends moodleform {
     //Add elements to formif
     public function definition() {
         global $CFG, $USER, $DB;
 
-// start the form
-                $mform = $this->_form; // Don't forget the underscore!
+        // start the form
+        $mform = $this->_form; // Don't forget the underscore!
+        $mform->addElement('text', 'name', get_string('name',  'local_contact_form'));
+        $mform->setType('name', PARAM_TEXT );
+
+
+        // add the send button
+        $this->add_action_buttons($cancel=true, $submitlabel=get_string('savechanges', 'local_contact_form'));
 
     //Custom validation should be added here
     function validation($data, $files) {
