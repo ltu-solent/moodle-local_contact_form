@@ -32,7 +32,7 @@ $PAGE->set_context(context_system::instance());
 $PAGE->set_url('/local/contact_form/index.php');
 $PAGE->set_pagelayout('report');
 $PAGE->set_title(get_string('pluginname', 'local_contact_form'));
-global $PAGE, $USER;
+global $PAGE, $USER, $CFG;
 
 if (isloggedin() && $USER->id != 1) {
 $PAGE->set_heading($USER->firstname . ' ' . $USER->lastname . ' - ' . get_string('pluginname', 'local_contact_form'));
@@ -66,14 +66,21 @@ if ($mform->is_cancelled()) {
 
 	// TODO move this all into locallib
 
-$courseid = (int)$fromform->courselist;
+	if(isset($fromform->courselist)) {
+		$courselist = $fromform->courselist;
+		$courseid = (int)$fromform->courselist;
+	} else {
+		$courselist = "None";
+	}
+
+// $courseid = (int)$fromform->courselist;
 
 
 	// $message['body'] =
 // TODO put the course in the body too
 	$message['body'] = $fromform->comments;
 	$message['body'] .= "\r\n";
-	$message['body'] .= "Course " . $fromform->courselist;
+	$message['body'] .= "Course " . $courselist;
 	$message['body'] .= "\r\n";
 	$message['body'] .= "IP Address: " . $_SERVER['HTTP_HOST'];
 	$message['body'] .= "\r\n";
@@ -96,6 +103,10 @@ $courseid = (int)$fromform->courselist;
 	// print_object($message);
 
 	create_message($message);
+
+	// TODO decide where to redirect to 
+	redirect($CFG->wwwroot. '/local/contact_form/index.php', get_string('messagesent', 'local_contact_form'), 15);
+
 } else {
   // this branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
   // or on the first display of the form.
