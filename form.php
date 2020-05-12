@@ -117,6 +117,15 @@ class loggedoutform extends moodleform {
     //Custom validation should be added here
     function validation($data, $files) {
         $errors = parent::validation($data, $files);
+            $recaptchaelement = $this->_form->getElement('recaptcha_element');
+            if (!empty($this->_form->_submitValues['g-recaptcha-response'])) {
+                $response = $this->_form->_submitValues['g-recaptcha-response'];
+                if (!$recaptchaelement->verify($response)) {
+                    $errors['recaptcha_element'] = get_string('incorrectpleasetryagain', 'auth');
+                }
+            } else {
+                $errors['recaptcha_element'] = get_string('missingrecaptchachallengefield');
+            }
             foreach($data as $k=>$v){
                 if(strpos($k, 'loggedoutform') !== false){
                     if(floor($v) != $v){
