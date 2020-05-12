@@ -93,9 +93,9 @@ class loggedoutform extends moodleform {
         $mform->setType('name', PARAM_TEXT );
 
         $mform->addElement('text', 'email', get_string('email',  'local_contact_form'));
-        $mform->setType('email', PARAM_TEXT );
+        $mform->setType('email', PARAM_NOTAGS );
         $mform->addRule('email', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
-        $mform->addRule('email', get_string('erremail', 'local_contact_form'), 'numeric', null, 'server', 1, 0);
+        $mform->addRule('email', get_string('erremail', 'local_contact_form'), 'email', null, 'server', 1, 0);
 
         $mform->addElement('text', 'phone', get_string('phone',  'local_contact_form'));
         $mform->setType('phone', PARAM_RAW );
@@ -105,7 +105,7 @@ class loggedoutform extends moodleform {
         // Add comments section
         $mform->addElement('textarea', 'problem', get_string('problem', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
         $mform->addRule('problem', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
-        $mform->addRule('problem', 'Min length 5', 'minlength', 5, 'client');
+        $mform->addRule('problem', get_string('minlength'), 'minlength', 20, 'client');
 
         // TODO add keys to config and pass correct variables
         $mform->addElement('recaptcha', 'recaptcha', 'RECAPTCHA');
