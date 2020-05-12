@@ -89,16 +89,26 @@ class loggedoutform extends moodleform {
         // start the form
         $mform = $this->_form; // Don't forget the underscore!
         $mform->addElement('text', 'name', get_string('name',  'local_contact_form'));
+        $mform->addRule('name', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
         $mform->setType('name', PARAM_TEXT );
+
         $mform->addElement('text', 'email', get_string('email',  'local_contact_form'));
         $mform->setType('email', PARAM_TEXT );
+        $mform->addRule('email', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
+        $mform->addRule('email', get_string('erremail', 'local_contact_form'), 'numeric', null, 'server', 1, 0);
+
         $mform->addElement('text', 'phone', get_string('phone',  'local_contact_form'));
-        $mform->setType('phone', PARAM_TEXT );
+        $mform->setType('phone', PARAM_RAW );
+        $mform->addRule('phone', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
+        $mform->addRule('phone', get_string('errnumeric', 'local_contact_form'), 'numeric', null, 'server', 1, 0);
 
-                // Add comments section
+        // Add comments section
         $mform->addElement('textarea', 'problem', get_string('problem', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
+        $mform->addRule('problem', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
+        $mform->addRule('problem', 'Min length 5', 'minlength', 5, 'client');
 
-                $mform->addElement('recaptcha', 'recaptcha', 'RECAPTCHA');
+        // TODO add keys to config and pass correct variables
+        $mform->addElement('recaptcha', 'recaptcha', 'RECAPTCHA');
 
 
         // add the send button
@@ -106,7 +116,16 @@ class loggedoutform extends moodleform {
 
     //Custom validation should be added here
     function validation($data, $files) {
-        return array();
+        $errors = parent::validation($data, $files);
+            foreach($data as $k=>$v){
+                if(strpos($k, 'loggedoutform') !== false){
+                    if(floor($v) != $v){
+                        $errors[$k] = get_string('errnumeric', 'local_contact_form');
+                    }
+                }
+            }
+
+      return $errors;
     }
 }
 }
