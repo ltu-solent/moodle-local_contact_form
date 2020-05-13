@@ -34,11 +34,8 @@ $PAGE->set_pagelayout('report');
 $PAGE->set_title(get_string('pluginname', 'local_contact_form'));
 global $PAGE, $USER, $CFG;
 
-if (isloggedin() && $USER->id != 1) {
-$PAGE->set_heading($USER->firstname . ' ' . $USER->lastname . ' - ' . get_string('pluginname', 'local_contact_form'));
-} else {
-  $PAGE->set_heading(get_string('pluginname', 'local_contact_form'));
-}
+$PAGE->set_heading(get_string('pluginname', 'local_contact_form'));
+
 
 echo $OUTPUT->header();
 
@@ -66,9 +63,6 @@ if ($mform->is_cancelled()) {
   //In this case you process validated data. $mform->get_data() returns data posted in form.
 
 	// TODO move this all into locallib
-	print('here');
-	print_object($fromform);
-	print('here');
 
 	if(isset($fromform->courselist)) {
 		$courselist = $fromform->courselist;
@@ -153,7 +147,7 @@ print_object($fromform);
 	$message['body'] .= "\r\n";
 	$message['body'] .= "Phone: " . $fromform->phone;
 	$message['body'] .= "\r\n";
-	$message['body'] .= "IP Address: " . $_SERVER['HTTP_HOST'];
+	$message['body'] .= "IP Address: " . $_SERVER['REMOTE_ADDR'];
 	$message['body'] .= "\r\n";
 	$message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
 	$message['subject'] = get_string('loggedoutsubject', 'local_contact_form');

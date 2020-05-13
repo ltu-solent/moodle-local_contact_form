@@ -63,7 +63,7 @@ class enquiryform extends moodleform {
           // IMPORTANT: add validation and type rules as per documentation
           $checkarray[] = $mform->createElement('checkbox', 'querytype_' . $querytype, $querytype);
         }
-        $mform->addGroup($checkarray, 'checkar', '', array(' '), false);
+        $mform->addGroup($checkarray, 'checkar', 'Query type:', array(' '), false);
 
 // add current modules here in a dropdown
 
@@ -113,7 +113,7 @@ class loggedoutform extends moodleform {
         // Add comments section
         $mform->addElement('textarea', 'problem', get_string('problem', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
         $mform->addRule('problem', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
-        $mform->addRule('problem', get_string('minlength'), 'minlength', 20, 'client');
+        $mform->addRule('problem', get_string('minlength', 'local_contact_form'), 'minlength', 20, 'client');
 
         // TODO add keys to config and pass correct variables
         $mform->addElement('recaptcha', 'recaptcha_element', 'RECAPTCHA');
