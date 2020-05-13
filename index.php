@@ -127,6 +127,30 @@ if ($mform->is_cancelled()) {
 	    //Handle form cancel operation, if cancel button is present on form
 	} else if ($fromform = $mform->get_data()) {
 print_object($fromform);
+	// print_object($message);
+
+	$message['body'] = $fromform->problem;
+	$message['body'] .= "\r\n";
+	$message['body'] .= "Name: " . $fromform->name;
+	$message['body'] .= "\r\n";
+	$message['body'] .= "Email: " . $fromform->email;
+	$message['body'] .= "\r\n";
+	$message['body'] .= "Phone: " . $fromform->phone;
+	$message['body'] .= "\r\n";
+	$message['body'] .= "IP Address: " . $_SERVER['HTTP_HOST'];
+	$message['body'] .= "\r\n";
+	$message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
+	$message['subject'] = get_string('loggedoutsubject', 'local_contact_form');
+	$message['fromemail'] = $fromform->email;
+	// $message['emailto'] = 'catherine.newman@solent.ac.uk'; // TODO get this from the settings
+	$message['emailto'] = 'abc@123.com';
+
+	print_object($message);
+
+	create_message($message);
+
+	// TODO decide where to redirect to 
+	redirect($CFG->wwwroot. '/local/contact_form/index.php', get_string('messagesent', 'local_contact_form'), 15);
 
 	  //In this case you process validated data. $mform->get_data() returns data posted in form.
 	} else {

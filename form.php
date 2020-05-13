@@ -36,7 +36,7 @@ class enquiryform extends moodleform {
 
 // Check if they're logged in, if not do the non logged in form
 
-// else do the staff/student form
+        // TODO store this in a variable
 
         if(get_user_type() == 'student'){
             $courses = get_student_courses();
@@ -44,6 +44,8 @@ class enquiryform extends moodleform {
         } else { // for now, they're staff
             $querytypes = array("Assessment link missing/dates incorrect", "Assessment other", "Unit leader enrolment", "Other");
         }
+
+        // TODO get the department and set it as a hidden field
 
 // start the form
         $mform = $this->_form; // Don't forget the underscore!
@@ -56,6 +58,9 @@ class enquiryform extends moodleform {
         $mform->addGroup($checkarray, 'checkar', '', array(' '), false);
 
 // add current modules here in a dropdown
+
+        // TODO read this from the variable
+        // TODO pass this value as a hidden field
          if(get_user_type() == 'student'){
         	  $coursenames = array();
             foreach ($courses as $course => $data) {
@@ -68,11 +73,6 @@ class enquiryform extends moodleform {
         $mform->addElement('textarea', 'comments', get_string('description', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
 
         $this->add_action_buttons($cancel=true, $submitlabel=get_string('savechanges', 'local_contact_form'));
-
-
-
-        // $mform->addElement('text', 'email', get_string('email')); // Add elements to your form
-        // $mform->setType('email', PARAM_NOTAGS);                   //Set type of element
 
     }
     //Custom validation should be added here
