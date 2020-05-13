@@ -66,6 +66,9 @@ if ($mform->is_cancelled()) {
   //In this case you process validated data. $mform->get_data() returns data posted in form.
 
 	// TODO move this all into locallib
+	print('here');
+	print_object($fromform);
+	print('here');
 
 	if(isset($fromform->courselist)) {
 		$courselist = $fromform->courselist;
@@ -89,20 +92,31 @@ if ($mform->is_cancelled()) {
 	$message['subject'] = "";
 	$message['fromemail'] = $USER->email;
 	// $message['emailto'] = 'catherine.newman@solent.ac.uk'; // TODO get this from the settings
-	$message['emailto'] = 'abc@123.com';
+
 
 //get which boxes are checked
 
 	$subject = "";
 	foreach ($fromform as $form=>$values) {
-	if( ($x_pos = strpos($form, '_')) !== FALSE )
-   	$message['subject'] .= substr($form, $x_pos + 1) . ' ';
+		if( ($x_pos = strpos($form, '_')) !== FALSE )
+   			$message['subject'] .= substr($form, $x_pos + 1) . ' ';
 
 
 
 	}
-	// print_object($message);
 
+
+// TODO set the cc to LTU if it's going to SR
+	// if($message['subject'] == '') {
+	// 	$message['emailto'] = get_config('local_contact_form' , 'SRemail');
+	// 	$message['cc'] = 	$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
+
+	// } else {
+		$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
+
+	// }
+	print_object($message);
+// 
 	create_message($message);
 
 	// TODO decide where to redirect to 
@@ -143,7 +157,7 @@ print_object($fromform);
 	$message['subject'] = get_string('loggedoutsubject', 'local_contact_form');
 	$message['fromemail'] = $fromform->email;
 	// $message['emailto'] = 'catherine.newman@solent.ac.uk'; // TODO get this from the settings
-	$message['emailto'] = 'abc@123.com';
+	$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
 
 	print_object($message);
 

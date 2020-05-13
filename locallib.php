@@ -51,12 +51,16 @@ function get_student_courses(){
 }
 
 function create_message($message) {
+  print_object($message);
 	$messagebody = $message['body'];
 	$to = $message['emailto'];
 	$subject = $message['subject'];
 // 	$subject = $message['courseid' . ' ' . $message['coursename']];
 
 	$headers = "From: " . $message['fromemail'] . "\r\n";
+  if(isset($message['cc'])) {
+    $headers .= "Cc: " . $message['cc'] . "\r\n";
+  }
 // 	$headers .= "Reply-To: " . get_config('local_quercus_tasks', 'senderrorto') . "\r\n";
 // 	$headers .= "MIME-Version: 1.0\r\n";
 // 	$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
