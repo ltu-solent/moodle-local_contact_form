@@ -84,7 +84,9 @@ if ($mform->is_cancelled()) {
 // TODO put the course in the body too
 	$message['body'] = $fromform->comments;
 	$message['body'] .= "\r\n";
-	$message['body'] .= "Course " . $courselist;
+	$message['body'] .= "Course: " . $courselist;
+	$message['body'] .= "\r\n";
+	$message['body'] .= "Department: " . $fromform->department;
 	$message['body'] .= "\r\n";
 	$message['body'] .= "IP Address: " . $_SERVER['HTTP_HOST'];
 	$message['body'] .= "\r\n";
@@ -115,7 +117,7 @@ if ($mform->is_cancelled()) {
 		$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
 
 	// }
-	print_object($message);
+	// print_object($message);
 // 
 	create_message($message);
 

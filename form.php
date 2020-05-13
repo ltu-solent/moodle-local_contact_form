@@ -38,7 +38,11 @@ class enquiryform extends moodleform {
 
         // TODO store this in a variable
 
-        if(get_user_type() == 'student'){
+        $usertype = get_user_type();
+
+        print_object($usertype);
+
+        if($usertype !== 'student'){
             $courses = get_student_courses();
             $querytypes = array("Access/account/password", "Assessment", "Enrollment", "Other");
         } else { // for now, they're staff
@@ -51,6 +55,10 @@ class enquiryform extends moodleform {
         $mform = $this->_form; // Don't forget the underscore!
         $checkarray=array();
 
+        // store the department in a hidden field
+        $mform->addElement('hidden','department', $usertype);
+        $mform->setType('department', PARAM_RAW );
+
         foreach($querytypes as $querytype) {
           // IMPORTANT: add validation and type rules as per documentation
           $checkarray[] = $mform->createElement('checkbox', 'querytype_' . $querytype, $querytype);
@@ -61,7 +69,7 @@ class enquiryform extends moodleform {
 
         // TODO read this from the variable
         // TODO pass this value as a hidden field
-         if(get_user_type() == 'student'){
+         if($usertype == 'student'){
         	  $coursenames = array();
             foreach ($courses as $course => $data) {
         	   $coursenames[$data->shortname] = $data->fullname;
