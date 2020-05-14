@@ -81,6 +81,7 @@ class enquiryform extends moodleform {
         }
         // Add comments section
         $mform->addElement('textarea', 'comments', get_string('description', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
+        $mform->addRule('comments', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
         $mform->addRule('comments', get_string('minlength', 'local_contact_form'), 'minlength', 20, 'client');
 
         $this->add_action_buttons($cancel=true, $submitlabel=get_string('savechanges', 'local_contact_form'));
