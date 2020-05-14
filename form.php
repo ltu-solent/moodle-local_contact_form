@@ -31,7 +31,9 @@ require_once("$CFG->libdir/formslib.php");
 class enquiryform extends moodleform {
     //Add elements to formif
     public function definition() {
-        global $CFG, $USER, $DB;
+        global $CFG, $USER, $DB, $PAGE;
+        $PAGE->requires->js_call_amd('local_contact_form/checkboxes', 'init');
+
 
 
 // Check if they're logged in, if not do the non logged in form
@@ -64,14 +66,10 @@ class enquiryform extends moodleform {
           $checkarray[] = $mform->createElement('checkbox', 'querytype_' . $querytype, $querytype);
         }
 
-        // array_unshift($checkarray, 'Select');
-
         $mform->addGroup($checkarray, 'checkar', 'Query type:', array(' '), false);
 
-// add current modules here in a dropdown
 
         // TODO read this from the variable
-        // TODO pass this value as a hidden field
          if($usertype == 'student'){
         	$coursenames = array();
             $courses = get_student_courses();
@@ -79,11 +77,6 @@ class enquiryform extends moodleform {
         	   $coursenames[$data->shortname] = $data->fullname;
           }
         array_unshift($coursenames , 'Select');
-
-          // print_object($usertype);
-
-          // print_object($coursenames);
-
           $mform->addElement('select', 'courselist', get_string('courselistlabel', 'local_contact_form'), $coursenames);
         }
         // Add comments section
@@ -92,10 +85,16 @@ class enquiryform extends moodleform {
 
         $this->add_action_buttons($cancel=true, $submitlabel=get_string('savechanges', 'local_contact_form'));
 
+        $mform->addElement('static', 'Additional text', get_string('bottomlabel', 'local_contact_form'), get_string('bottomcontent', 'local_contact_form'));
+
     }
     //Custom validation should be added here
     function validation($data, $files) {
-        return array();
+        // return array();
+        // $errors = parent::validation($data, $files);
+
+        print_object($data);
+        // die();// if($data[''])
     }
 }
 

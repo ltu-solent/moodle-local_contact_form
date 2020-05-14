@@ -1,6 +1,8 @@
 <?php
 
 $string['pluginname'] = 'Contact Form';
+$string['bottomcontent'] = 'This is the content we want to show at the bottom of the page';
+$string['bottomlabel'] = 'Label for bottom content';
 $string['courselistlabel'] = 'List of courses';
 $string['description'] = 'Description of the problem';
 $string['email'] = 'Non-Solent email address: ';

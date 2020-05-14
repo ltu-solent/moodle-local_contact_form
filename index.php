@@ -87,9 +87,7 @@ if ($mform->is_cancelled()) {
 	$message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
 	$message['subject'] = "";
 	$message['fromemail'] = $USER->email;
-	// $message['emailto'] = 'catherine.newman@solent.ac.uk'; // TODO get this from the settings
-
-
+	
 //get which boxes are checked
 
 	$subject = "";
