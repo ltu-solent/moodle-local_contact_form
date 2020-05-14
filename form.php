@@ -40,10 +40,10 @@ class enquiryform extends moodleform {
 
         $usertype = get_user_type();
 
-        print_object($usertype);
+        // print_object($usertype);
 
         if($usertype !== 'student'){
-            $courses = get_student_courses();
+
             $querytypes = array("Access/account/password", "Assessment", "Enrollment", "Other");
         } else { // for now, they're staff
             $querytypes = array("Assessment link missing/dates incorrect", "Assessment other", "Unit leader enrolment", "Other");
@@ -63,6 +63,9 @@ class enquiryform extends moodleform {
           // IMPORTANT: add validation and type rules as per documentation
           $checkarray[] = $mform->createElement('checkbox', 'querytype_' . $querytype, $querytype);
         }
+
+        // array_unshift($checkarray, 'Select');
+
         $mform->addGroup($checkarray, 'checkar', 'Query type:', array(' '), false);
 
 // add current modules here in a dropdown
@@ -70,10 +73,16 @@ class enquiryform extends moodleform {
         // TODO read this from the variable
         // TODO pass this value as a hidden field
          if($usertype == 'student'){
-        	  $coursenames = array();
+        	$coursenames = array();
+            $courses = get_student_courses();
             foreach ($courses as $course => $data) {
         	   $coursenames[$data->shortname] = $data->fullname;
           }
+        array_unshift($coursenames , 'Select');
+
+          // print_object($usertype);
+
+          // print_object($coursenames);
 
           $mform->addElement('select', 'courselist', get_string('courselistlabel', 'local_contact_form'), $coursenames);
         }
