@@ -40,20 +40,17 @@ class enquiryform extends moodleform {
 
         // TODO store this in a variable
 
-        $usertype = get_user_type();
-
-        // print_object($usertype);
+        //$usertype = get_user_type();
+        $usertype = 'staff';
 
         if($usertype == 'student'){
 
-            $querytypes = array("Access/account/password", "Assessment", "Enrollment", "Other");
+            $querytypes = array("Access/account/password"=>"Access/account/password", "Assessment"=>"Assessment", "Enrollment"=>"Enrollment", "Other"=>"Other");
         } else { // for now, they're staff
-            $querytypes = array("Assessment link missing/dates incorrect", "Assessment other", "Unit leader enrolment", "Other");
+            $querytypes = array("Assessment_Missing_Dates_Incorrect"=>"Assessment link missing/dates incorrect", "Assessment_Other"=>"Assessment other", "Unit_leader_enrolment"=>"Unit leader enrolment", "Other"=>"Other");
         }
 
-        // TODO get the department and set it as a hidden field
-
-// start the form
+        // start the form
         $mform = $this->_form; // Don't forget the underscore!
         $checkarray=array();
 
@@ -61,9 +58,9 @@ class enquiryform extends moodleform {
         $mform->addElement('hidden','department', $usertype);
         $mform->setType('department', PARAM_RAW );
 
-        foreach($querytypes as $querytype) {
+        foreach($querytypes as $querytype => $q) {
           // IMPORTANT: add validation and type rules as per documentation
-          $checkarray[] = $mform->createElement('checkbox', 'querytype_' . $querytype, $querytype);
+          $checkarray[] = $mform->createElement('checkbox', 'querytype_' . $querytype, $q);
         }
 
         $mform->addGroup($checkarray, 'checkar', 'Query type:', array(' '), false);
@@ -94,7 +91,7 @@ class enquiryform extends moodleform {
         // return array();
         // $errors = parent::validation($data, $files);
 
-        print_object($data);
+        //print_object($data);
         // die();// if($data[''])
     }
 }

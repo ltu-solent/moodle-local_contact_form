@@ -87,16 +87,15 @@ if ($mform->is_cancelled()) {
 	$message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
 	$message['subject'] = "";
 	$message['fromemail'] = $USER->email;
-	
+
 //get which boxes are checked
 
 	$subject = "";
+
 	foreach ($fromform as $form=>$values) {
-		if( ($x_pos = strpos($form, '_')) !== FALSE )
-   			$message['subject'] .= substr($form, $x_pos + 1) . ' ';
-
-
-
+		if(strpos($form, 'querytype_') !== FALSE ){
+   			$message['subject'] .= substr($form, strpos($form, "_") + 1)  . ' ';
+		}
 	}
 
 
@@ -108,16 +107,16 @@ if ($mform->is_cancelled()) {
 	// } else {
 
 		// if($message['subject'])
-	print_r($message['subject']);
+	//var_dump($message);
 
 		$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
 
 	// }
 	// print_object($message);
-// 
+//
 	create_message($message);
 
-	// TODO decide where to redirect to 
+	// TODO decide where to redirect to
 	redirect($CFG->wwwroot. '/local/contact_form/index.php', get_string('messagesent', 'local_contact_form'), 15);
 
 } else {
@@ -138,7 +137,7 @@ if ($mform->is_cancelled()) {
 	if ($mform->is_cancelled()) {
 	    //Handle form cancel operation, if cancel button is present on form
 	} else if ($fromform = $mform->get_data()) {
-print_object($fromform);
+//print_object($fromform);
 	// print_object($message);
 
 	$message['body'] = $fromform->problem;
@@ -161,7 +160,7 @@ print_object($fromform);
 
 	create_message($message);
 
-	// TODO decide where to redirect to 
+	// TODO decide where to redirect to
 	redirect($CFG->wwwroot. '/local/contact_form/index.php', get_string('messagesent', 'local_contact_form'), 15);
 
 	  //In this case you process validated data. $mform->get_data() returns data posted in form.
