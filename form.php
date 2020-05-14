@@ -42,7 +42,7 @@ class enquiryform extends moodleform {
 
         // print_object($usertype);
 
-        if($usertype !== 'student'){
+        if($usertype == 'student'){
 
             $querytypes = array("Access/account/password", "Assessment", "Enrollment", "Other");
         } else { // for now, they're staff
