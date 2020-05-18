@@ -82,7 +82,7 @@ class enquiryform extends moodleform {
         // disable the dropdown course list unless assessment is checked
 
                 // $mform->addRule('courselist', get_string('required', 'local_contact_form'), 'required', '', 'client', false, false);
-                $mform->disabledIf('courselist', 'querytype_Assessment');
+                // $mform->disabledIf('courselist', 'querytype_Assessment');
 
         // Add comments section
         $mform->addElement('textarea', 'comments', get_string('description', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
@@ -98,6 +98,7 @@ class enquiryform extends moodleform {
     function validation($data, $files) {
         // return array();
         // $errors = array();
+        print_object($data);
         $errors = parent::validation($data, $files);
         // if (! course_selected() {
         if (isset($data['querytype_Assessment']) && $data['courselist'] === '0') {
