@@ -102,7 +102,7 @@ class enquiryform extends moodleform {
         $errors = parent::validation($data, $files);
         // if (! course_selected() {
         if (isset($data['querytype_Assessment']) && $data['courselist'] === '0') {
-            $errors = get_string('errselected', 'local_contact_form');
+            $errors['querytype_Assessment'] = get_string('errselected', 'local_contact_form');
         }
         return $errors;
 }
