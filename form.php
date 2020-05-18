@@ -32,7 +32,7 @@ class enquiryform extends moodleform {
     //Add elements to formif
     public function definition() {
         global $CFG, $USER, $DB, $PAGE;
-        $PAGE->requires->js_call_amd('local_contact_form/checkboxes', 'init');
+        // $PAGE->requires->js_call_amd('local_contact_form/checkboxes', 'init');
 
 
 
