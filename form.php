@@ -40,8 +40,10 @@ class enquiryform extends moodleform {
 
         // TODO store this in a variable
 
-        //$usertype = get_user_type();
-        $usertype = 'staff';
+        $usertype = get_user_type();
+
+        // print_object($usertype);
+        // $usertype = 'staff';
 
         if($usertype == 'student'){
 
@@ -64,9 +66,8 @@ class enquiryform extends moodleform {
         }
 
         $mform->addGroup($checkarray, 'checkar', 'Query type:', array(' '), false);
+        // $mform->addGroupRule('checkar', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
 
-
-        // TODO read this from the variable
          if($usertype == 'student'){
         	$coursenames = array();
             $courses = get_student_courses();
@@ -74,8 +75,15 @@ class enquiryform extends moodleform {
         	   $coursenames[$data->shortname] = $data->fullname;
           }
         array_unshift($coursenames , 'Select');
+
           $mform->addElement('select', 'courselist', get_string('courselistlabel', 'local_contact_form'), $coursenames);
+
         }
+        // disable the dropdown course list unless assessment is checked
+
+                // $mform->addRule('courselist', get_string('required', 'local_contact_form'), 'required', '', 'client', false, false);
+                $mform->disabledIf('courselist', 'querytype_Assessment');
+
         // Add comments section
         $mform->addElement('textarea', 'comments', get_string('description', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
         $mform->addRule('comments', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
@@ -89,12 +97,23 @@ class enquiryform extends moodleform {
     //Custom validation should be added here
     function validation($data, $files) {
         // return array();
-        // $errors = parent::validation($data, $files);
+        // $errors = array();
+        $errors = parent::validation($data, $files);
+        // if (! course_selected() {
+        if (isset($data['querytype_Assessment']) && $data['courselist'] === '0') {
+            $errors = get_string('errselected', 'local_contact_form');
+        }
+        return $errors;
+}
+// return $errors;
 
-        //print_object($data);
+
+        // print_object($data);
+
+
         // die();// if($data[''])
     }
-}
+
 
 class loggedoutform extends moodleform {
     //Add elements to formif

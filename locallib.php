@@ -50,6 +50,13 @@ function get_student_courses(){
   return $courses;
 }
 
+function course_selected() {
+        if (isset($data['querytype_Assessment']) && $data['courselist'] === '0') {
+            $errors = get_string('errselected', 'local_contact_form');
+        }
+        return $errors;
+}
+
 function create_message($message) {
   print_object($message);
 	$messagebody = $message['body'];

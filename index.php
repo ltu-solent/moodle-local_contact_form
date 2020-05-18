@@ -169,8 +169,8 @@ if ($mform->is_cancelled()) {
 	  // or on the first display of the form.
 
 	  //Set default data (if any)
-		$toform="";
-	  $mform->set_data($toform);
+		// $toform="";
+	  // $mform->set_data($fromform);
 	  //displays the form
 	  $mform->display();
 	}
