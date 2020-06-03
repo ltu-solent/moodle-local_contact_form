@@ -126,6 +126,8 @@ class loggedoutform extends moodleform {
         $mform->addElement('text', 'name', get_string('name',  'local_contact_form'));
         $mform->addRule('name', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
         $mform->setType('name', PARAM_TEXT );
+        $mform->addElement('text', 'solentusername', get_string('solentusername', 'local_contact_form'));
+        $mform->setType('solentusername', PARAM_TEXT);
 
         $mform->addElement('text', 'email', get_string('email',  'local_contact_form'));
         $mform->setType('email', PARAM_NOTAGS );
@@ -137,17 +139,26 @@ class loggedoutform extends moodleform {
         $mform->addRule('phone', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
         $mform->addRule('phone', get_string('errnumeric', 'local_contact_form'), 'numeric', null, 'server', 1, 0);
 
+        // $mform->addElement('html', '<div class="aligndivs">');
+
         // Add comments section
-        $mform->addElement('textarea', 'problem', get_string('problem', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
-        $mform->addRule('problem', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
-        $mform->addRule('problem', get_string('minlength', 'local_contact_form'), 'minlength', 20, 'client');
+        $mform->addElement('textarea', 'description', get_string('description', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
+        $mform->addRule('description', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
+        $mform->addRule('description', get_string('minlength', 'local_contact_form'), 'minlength', 20, 'client');
+                        // add a div to display content
+        $mform->addElement('static', 'infotext', get_string('loggedoutinfotext_label', 'local_contact_form'), get_string('loggedoutinfotext', 'local_contact_form'));
+        $mform->setType('infotext', PARAM_TEXT);
+        // $mform->addElement('html', '</div>');
 
         // TODO add keys to config and pass correct variables
         $mform->addElement('recaptcha', 'recaptcha_element', 'RECAPTCHA');
 
 
+
+
         // add the send button
         $this->add_action_buttons($cancel=true, $submitlabel=get_string('savechanges', 'local_contact_form'));
+
 }
     //Custom validation should be added here
     function validation($data, $files) {
