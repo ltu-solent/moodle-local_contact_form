@@ -62,11 +62,16 @@ class enquiryform extends moodleform {
 
         foreach($querytypes as $querytype => $q) {
           // IMPORTANT: add validation and type rules as per documentation
-          $checkarray[] = $mform->createElement('checkbox', 'querytype_' . $querytype, $q);
+            // $radioarray[] = $mform->createElement('radio', 'yesno', '', get_string('yes'), 1, $attributes);
+            $radioarray[] = $mform->createElement('radio', 'querytype', '', $querytype, $q);
+          // $radioarray[] = $mform->createElement('checkbox', 'querytype_' . $querytype, $q);
         }
 
-        $mform->addGroup($checkarray, 'checkar', 'Query type:', array(' '), false);
+        $mform->addGroup($radioarray, 'radioar', 'Query type:', array(' '), false);
         // $mform->addGroupRule('checkar', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
+
+        print_object ($radioarray);
+
 
          if($usertype == 'student'){
         	$coursenames = array();
