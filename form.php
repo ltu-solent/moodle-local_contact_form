@@ -121,6 +121,15 @@ class loggedoutform extends moodleform {
     public function definition() {
         global $CFG, $USER, $DB;
 
+        $a = new stdClass;
+        $a->linktext = get_string('unitytext', 'local_contact_form');
+        $a->linkurl = get_string('unityurl', 'local_contact_form');
+
+        // $a->linktext = 'UNITY';
+        // $a = 'unity';
+
+        // print_object($a);
+
         // start the form
         $mform = $this->_form; // Don't forget the underscore!
         $mform->addElement('text', 'name', get_string('name',  'local_contact_form'));
@@ -136,8 +145,12 @@ class loggedoutform extends moodleform {
 
         $mform->addElement('text', 'phone', get_string('phone',  'local_contact_form'));
         $mform->setType('phone', PARAM_RAW );
-        $mform->addRule('phone', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
+        // $mform->addRule('phone', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
         $mform->addRule('phone', get_string('errnumeric', 'local_contact_form'), 'numeric', null, 'server', 1, 0);
+
+        // TODO: ask Sarah if this is ok here
+        $mform->addElement('static', 'infotext', get_string('loggedoutinfotext_label', 'local_contact_form'), get_string('loggedoutinfotext', 'local_contact_form', $a));
+        $mform->setType('infotext', PARAM_TEXT);
 
         // $mform->addElement('html', '<div class="aligndivs">');
 
@@ -146,8 +159,7 @@ class loggedoutform extends moodleform {
         $mform->addRule('description', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
         $mform->addRule('description', get_string('minlength', 'local_contact_form'), 'minlength', 20, 'client');
                         // add a div to display content
-        $mform->addElement('static', 'infotext', get_string('loggedoutinfotext_label', 'local_contact_form'), get_string('loggedoutinfotext', 'local_contact_form'));
-        $mform->setType('infotext', PARAM_TEXT);
+
         // $mform->addElement('html', '</div>');
 
         // TODO add keys to config and pass correct variables
