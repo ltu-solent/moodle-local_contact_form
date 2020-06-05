@@ -32,7 +32,7 @@ class enquiryform extends moodleform {
     //Add elements to formif
     public function definition() {
         global $CFG, $USER, $DB, $PAGE;
-        // $PAGE->requires->js_call_amd('local_contact_form/checkboxes', 'init');
+        $PAGE->requires->js_call_amd('local_contact_form/radiobuttons', 'init');
 
 
 
@@ -41,9 +41,6 @@ class enquiryform extends moodleform {
         // TODO store this in a variable
 
         $usertype = get_user_type();
-
-        // print_object($usertype);
-        // $usertype = 'staff';
 
         if($usertype == 'student'){
 
@@ -62,32 +59,29 @@ class enquiryform extends moodleform {
 
         foreach($querytypes as $querytype => $q) {
           // IMPORTANT: add validation and type rules as per documentation
-            // $radioarray[] = $mform->createElement('radio', 'yesno', '', get_string('yes'), 1, $attributes);
             $radioarray[] = $mform->createElement('radio', 'querytype', '', $querytype, $q);
-          // $radioarray[] = $mform->createElement('checkbox', 'querytype_' . $querytype, $q);
         }
 
         $mform->addGroup($radioarray, 'radioar', 'Query type:', array(' '), false);
-        // $mform->addGroupRule('checkar', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
-
-        print_object ($radioarray);
-
-
-         if($usertype == 'student'){
+   
+        if($usertype == 'student'){
         	$coursenames = array();
             $courses = get_student_courses();
             foreach ($courses as $course => $data) {
         	   $coursenames[$data->shortname] = $data->fullname;
-          }
-        array_unshift($coursenames , 'Select');
+            }
+            array_unshift($coursenames , 'Select');
 
-          $mform->addElement('select', 'courselist', get_string('courselistlabel', 'local_contact_form'), $coursenames);
+            $mform->addElement('select', 'courselist', get_string('courselistlabel', 'local_contact_form'), $coursenames);
 
         }
-        // disable the dropdown course list unless assessment is checked
 
-                // $mform->addRule('courselist', get_string('required', 'local_contact_form'), 'required', '', 'client', false, false);
-                // $mform->disabledIf('courselist', 'querytype_Assessment');
+        // Add a static element to display information
+
+        
+
+        $mform->addElement('static', 'Additional text', get_string('bottomlabel', 'local_contact_form'), get_string('bottomcontent', 'local_contact_form'));
+
 
         // Add comments section
         $mform->addElement('textarea', 'comments', get_string('description', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
@@ -95,8 +89,6 @@ class enquiryform extends moodleform {
         $mform->addRule('comments', get_string('minlength', 'local_contact_form'), 'minlength', 20, 'client');
 
         $this->add_action_buttons($cancel=true, $submitlabel=get_string('savechanges', 'local_contact_form'));
-
-        $mform->addElement('static', 'Additional text', get_string('bottomlabel', 'local_contact_form'), get_string('bottomcontent', 'local_contact_form'));
 
     }
     //Custom validation should be added here
@@ -129,11 +121,7 @@ class loggedoutform extends moodleform {
         $a = new stdClass;
         $a->linktext = get_string('unitytext', 'local_contact_form');
         $a->linkurl = get_string('unityurl', 'local_contact_form');
-
-        // $a->linktext = 'UNITY';
-        // $a = 'unity';
-
-        // print_object($a);
+        $a->linkemail = get_config('local_contact_form' , 'LTUemail');
 
         // start the form
         $mform = $this->_form; // Don't forget the underscore!
@@ -157,21 +145,12 @@ class loggedoutform extends moodleform {
         $mform->addElement('static', 'infotext', get_string('loggedoutinfotext_label', 'local_contact_form'), get_string('loggedoutinfotext', 'local_contact_form', $a));
         $mform->setType('infotext', PARAM_TEXT);
 
-        // $mform->addElement('html', '<div class="aligndivs">');
-
         // Add comments section
         $mform->addElement('textarea', 'description', get_string('description', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
         $mform->addRule('description', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
         $mform->addRule('description', get_string('minlength', 'local_contact_form'), 'minlength', 20, 'client');
-                        // add a div to display content
 
-        // $mform->addElement('html', '</div>');
-
-        // TODO add keys to config and pass correct variables
         $mform->addElement('recaptcha', 'recaptcha_element', 'RECAPTCHA');
-
-
-
 
         // add the send button
         $this->add_action_buttons($cancel=true, $submitlabel=get_string('savechanges', 'local_contact_form'));

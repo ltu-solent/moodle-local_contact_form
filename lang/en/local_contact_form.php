@@ -3,8 +3,10 @@
 $string['pluginname'] = 'Contact Form';
 $string['bottomcontent'] = 'This is the content we want to show at the bottom of the page';
 $string['bottomlabel'] = 'Label for bottom content';
-$string['courselistlabel'] = 'List of courses';
-$string['description'] = 'Please enter details of your query and include as much information as possible';
+
+// TODO: should this be module??
+$string['courselistlabel'] = 'If applicable please select the page you are contacting us about';
+$string['description'] = 'Please describe your query with as many details as possible including alternative contact details if required';
 $string['email'] = 'Alternative Email ';
 $string['erremail'] = 'Must be a vaild email address';
 $string['errnumeric'] = 'Must be a number';
@@ -20,11 +22,10 @@ $string['loggedoutinfotext'] = 'Students: If your query relates to: <br>' .
 	'Replacement campus cards <br>' . 
 	'References <br>' . 
 	'Advice on regulations, processes and policy, please contact the Student Hub. <br>' . 
-	'Email: student.hub@solent.ac.uk Telephone: 023 8201 5200 <br>' . 
+	'Email: <a href=mailto:"{$a->linkemail}">{$a->linkemail}</a> Telephone: 023 8201 5200 <br>' . 
+// TODO: consider making the phone number clickable (for mobile)
 	'<br>' .
 	'Staff: If your query relates to account issues,  software requests or classroom or desktop hardware, please contact ICT through <a href="{$a->linkurl}">{$a->linktext}</a>';
-	// 'Staff: If your query relates to account issues,  software requests or classroom or desktop hardware, please contact ICT through {$a}';
-
 
 $string['loggedoutinfotext_label'] = "Helpful information";
 $string['messagesent'] = 'Your message has been sent. You will receive a copy by email';
