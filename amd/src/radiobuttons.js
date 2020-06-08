@@ -14,6 +14,7 @@ define(['jquery'], function($) {
             $("input[type='radio']").click(function(){
                 var radioValue = $("input[name='querytype']:checked").val();
                 if(radioValue){
+                    // return(radiovalue);
                     alert("Your are a - " + radioValue);
                 }
             });

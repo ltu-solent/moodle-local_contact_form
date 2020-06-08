@@ -59,7 +59,7 @@ class enquiryform extends moodleform {
 
         foreach($querytypes as $querytype => $q) {
           // IMPORTANT: add validation and type rules as per documentation
-            $radioarray[] = $mform->createElement('radio', 'querytype', '', $querytype, $q);
+            $radioarray[] = $mform->createElement('radio', 'querytype', '', $q, $querytype);
         }
 
         $mform->addGroup($radioarray, 'radioar', 'Query type:', array(' '), false);
