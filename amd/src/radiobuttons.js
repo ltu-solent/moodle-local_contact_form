@@ -21,18 +21,9 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, notificatio
                     // });
                     // alert(M.util.get_string(radioValue, 'local_contact_form'));
                     $.when(adviceText).done(function() {
-                        alert(M.util.get_string(radioValue, 'local_contact_form'));
+                        // alert(M.util.get_string(radioValue, 'local_contact_form'));
+                         $('.form-control-static').text(M.util.get_string(radioValue, 'local_contact_form'));
                     }).fail(notification.exception);
-                    if(radioValue === 'Assessment_Missing_Dates_Incorrect') {
-                        alert('yes');
-                    } else if(radioValue === 'Assessment_Other') {
-                        alert('No');
-                    } else if(radioValue === 'Unit_leader_enrolment') {
-                    } else if (radioValue === 'Staff_other') {
-                    } else if (radioValue === 'Access/account/password') {
-                    }
-
-
                }
             });
         }
