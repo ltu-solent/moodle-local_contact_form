@@ -1,23 +1,27 @@
 define(['jquery'], function($) {
-    return {
-        init: function() {
-             // Put whatever you like here. $ is available
-            // to you as normal.
-            // $('input[name="name_of_your_radiobutton"]:checked').val();
-            // $('input[name="querytype"]:checked').on('change', function(){
-            //     alert($('input[name=querytype]:checked', '.mform').val());
-            // });
-            // $('[name="querytype"').on('change', function() {
-                // alert($('input[name=querytype]:checked', '.mform').val());
-            // });
+    $("input[name='querytype']").click(function(){
+        var radioValue = $("input[name='querytype']:checked").val();
+        if(radioValue){
+            // return(radiovalue);
+            alert("Your are a - " + radioValue);
 
-            $("input[type='radio']").click(function(){
-                var radioValue = $("input[name='querytype']:checked").val();
-                if(radioValue){
-                    // return(radiovalue);
-                    alert("Your are a - " + radioValue);
-                }
-            });
-        }
-    };
+            if(radioValue === 'Assessment_Missing_Dates_Incorrect') {
+                alert('yes');
+            } else if(radioValue === 'Assessment_Other') {
+                alert('No');
+            } else if(radioValue === 'Unit_leader_enrolment') {
+
+            } else if (radioValue === 'Staff_other') {
+
+            } else if (radioValue === 'Access/account/password') {
+
+            } else if (radioValue === '') {
+                
+            }
+
+
+
+            return radioValue;
+       }
+    });
 });

@@ -44,9 +44,9 @@ class enquiryform extends moodleform {
 
         if($usertype == 'student'){
 
-            $querytypes = array("Access/account/password"=>"Access/account/password", "Assessment"=>"Assessment", "Enrollment"=>"Enrollment", "Other"=>"Other");
+            $querytypes = array("Access/account/password"=>"Access/account/password", "Assessment"=>"Assessment", "Enrollment"=>"Enrollment", "Other"=>"Student_Other");
         } else { // for now, they're staff
-            $querytypes = array("Assessment_Missing_Dates_Incorrect"=>"Assessment link missing/dates incorrect", "Assessment_Other"=>"Assessment other", "Unit_leader_enrolment"=>"Unit leader enrolment", "Other"=>"Other");
+            $querytypes = array("Assessment_Missing_Dates_Incorrect"=>"Assessment link missing/dates incorrect", "Assessment_Other"=>"Assessment other", "Unit_leader_enrolment"=>"Unit leader enrolment", "Other"=>"Staff_Other");
         }
 
         // start the form
@@ -81,6 +81,8 @@ class enquiryform extends moodleform {
         
 
         $mform->addElement('static', 'Additional text', get_string('bottomlabel', 'local_contact_form'), get_string('bottomcontent', 'local_contact_form'));
+
+
 
 
         // Add comments section
