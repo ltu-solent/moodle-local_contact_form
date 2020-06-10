@@ -44,9 +44,9 @@ class enquiryform extends moodleform {
 
         if($usertype == 'student'){
 
-            $querytypes = array("Access/account/password"=>"Access/account/password", "Assessment"=>"Assessment", "Enrollment"=>"Enrollment", "Other"=>"Student_Other");
+            $querytypes = array("Access/account/password"=>"Access/account/password", "Assessment"=>"Assessment", "Enrollment"=>"Enrollment", "Student_Other"=>"Other");
         } else { // for now, they're staff
-            $querytypes = array("Assessment_Missing_Dates_Incorrect"=>"Assessment link missing/dates incorrect", "Assessment_Other"=>"Assessment other", "Unit_leader_enrolment"=>"Unit leader enrolment", "Other"=>"Staff_Other");
+            $querytypes = array("Assessment_Missing_Dates_Incorrect"=>"Assessment link missing/dates incorrect", "Assessment_Other"=>"Assessment other", "Unit_leader_enrolment"=>"Unit leader enrolment", "Staff_Other"=>"Other");
         }
 
         // start the form
