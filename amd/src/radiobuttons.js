@@ -10,13 +10,13 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, notificatio
                     var adviceText = str.get_strings([
                         {key: radioValue,
                             component: 'local_contact_form',
-                            param: {
-                                linktextpassss: 'Password Self-Service',
-                                linkurlpassss: 'https://passwordreset.microsoftonline.com/'
-                            }
+                            // param: {
+                            //     linkurlpassss: 'https://passwordreset.microsoftonline.com/',
+                            //     linktextpassss: 'Password Self-Service'
+                            // }
                         },
                     ]);
-                    alert(adviceText);
+                    // alert(adviceText);
                     // var stringargument = '';
                     // var adviceText = str.get_string(radioValue, 'local_contact_form', stringargument);
                     // as soon as the string is retrieved, i.e. the promise has been fulfilled,111

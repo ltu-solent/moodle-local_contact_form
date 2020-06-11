@@ -51,7 +51,7 @@ $string['Staff_Other'] = 'Click here for help with general help with using SOL<b
 	Click here for help with lecture Capture<br>
 	Click here for help with using Zoom<br><br>
 	If your query relates to account issues, software requests or classroom or desktop hardware please contact ICT through <a href="{$a->unityurl}">{$a->unitytext}</a>';
-$string['Access/account/password'] = 'If you cannot log into a Solent system please check if you are being asked to enter an email address for the username. Your email address is your Solent username@solent.ac.uk. For example 4SMITJ12@solent.ac.uk for the username 4SMITJ12. All passwords across Solent systems are the same. Click here to visit the <a href="{$a->linkurlpassss}">{$a->linktextpassss}</a> page.';
+$string['Access/account/password'] = "If you cannot log into a Solent system please check if you are being asked to enter an email address for the username. Your email address is your Solent username@solent.ac.uk. For example 4SMITJ12@solent.ac.uk for the username 4SMITJ12. All passwords across Solent systems are the same. Click here to visit the <a href='https://passwordreset.microsoftonline.com/'>Password Self-Service</a>page.";
 $string['Assessment'] = 'If you cannot submit and you have an URGENT deadline please email your assignment to ltu@solent.ac.uk and copy in your tutor. In other cases, look at the help resources for submitting files, submitting myPortfolio, submitting video/audio. ';
 $string['Enrollment'] = 'Please supply full details of the page(s) you are expecting to see and if possible start dates. Enrolments may take up to 24 hours after full registration, to show on SOL.';
 $string['Student_Other'] = 'If you have a SOL query, please supply as many details as possible including a contact number if you need to speak to somebody. Please check our student FAQs or check the help section in SOL.<br><br>
@@ -68,5 +68,7 @@ $string['Student_Other'] = 'If you have a SOL query, please supply as many detai
 	Telephone please contact the Student Hub on:<br>
 	Email: student.hub@solent.ac.uk<br>
 	Telephone: 023 8201 5200';
+$string['passwordlink'] = 'https://passwordreset.microsoftonline.com/';
+$string['passwordtext'] = 'Password Self-Service';
 $string['unitytext'] = 'UNITY';
 $string['unityurl'] = 'http://unity.solent.ac.uk';
