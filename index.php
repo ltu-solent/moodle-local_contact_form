@@ -110,12 +110,13 @@ if ($mform->is_cancelled()) {
 
 
 		$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
+		$message['cc'] ='';
 
 	}
 	// print_object($message);
 //
 	create_message($message);
-	print_object($message);
+	// print_object($message);
 
 	// TODO decide where to redirect to
 	redirect($CFG->wwwroot. '/local/contact_form/index.php', get_string('messagesent', 'local_contact_form'), 15);

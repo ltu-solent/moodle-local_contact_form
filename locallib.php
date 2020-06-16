@@ -50,15 +50,9 @@ function get_student_courses(){
   return $courses;
 }
 
-function course_selected() {
-        if (isset($data['querytype_Assessment']) && $data['courselist'] === '0') {
-            $errors = get_string('errselected', 'local_contact_form');
-        }
-        return $errors;
-}
 
 function create_message($message) {
-  print_object($message);
+  // print_object($message);
 	$messagebody = $message['body'];
 	$to = $message['emailto'];
 	$subject = $message['subject'];
@@ -66,12 +60,12 @@ function create_message($message) {
 
 	$headers = "From: " . $message['fromemail'] . "\r\n";
   if(isset($message['cc'])) {
-    $headers .= "Cc: " . $message['cc'] . "\r\n";
+    $cc= $message['cc'] . "\r\n";
   }
 // 	$headers .= "Reply-To: " . get_config('local_quercus_tasks', 'senderrorto') . "\r\n";
 // 	$headers .= "MIME-Version: 1.0\r\n";
 // 	$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-	mail($to, $subject, $messagebody, $headers);
+	mail($to, $cc, $subject, $messagebody, $headers);
 	// var_dump($to, $subject, $messagebody, $headers);
 	// var_dump($to, $subject, $messagebody, $headers);
 
