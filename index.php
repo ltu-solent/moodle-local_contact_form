@@ -73,7 +73,7 @@ if ($mform->is_cancelled()) {
 
 // $courseid = (int)$fromform->courselist;
 
-
+// print_object($fromform);
 	// $message['body'] =
 // TODO put the course in the body too
 	$message['body'] = $fromform->comments;
@@ -90,31 +90,32 @@ if ($mform->is_cancelled()) {
 
 //get which boxes are checked
 
-	$subject = "";
+	$message['subject'] = $fromform->querytype;
 
-	foreach ($fromform as $form=>$values) {
-		if(strpos($form, 'querytype_') !== FALSE ){
-   			$message['subject'] .= substr($form, strpos($form, "_") + 1)  . ' ';
-		}
-	}
-
+	// foreach ($fromform as $form=>$values) {
+	// 	if(strpos($form, 'querytype_') !== FALSE ){
+ //   			$message['subject'] .= substr($form, strpos($form, "_") + 1)  . ' ';
+	// 	}
+	// }
+// print_object($message);
 
 // TODO set the cc to LTU if it's going to SR
-	// if($message['subject'] == '') {
-	// 	$message['emailto'] = get_config('local_contact_form' , 'SRemail');
-	// 	$message['cc'] = 	$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
+	if($message['subject'] == 'Assessment link missing/dates incorrect' || $message['subject'] == 'Unit_leader_enrolment') {
+		$message['emailto'] = get_config('local_contact_form' , 'SRemail');
+		$message['cc'] = 	$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
 
-	// } else {
+	} else {
 
 		// if($message['subject'])
-	//var_dump($message);
+
 
 		$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
 
-	// }
+	}
 	// print_object($message);
 //
 	create_message($message);
+	print_object($message);
 
 	// TODO decide where to redirect to
 	redirect($CFG->wwwroot. '/local/contact_form/index.php', get_string('messagesent', 'local_contact_form'), 15);
@@ -153,10 +154,11 @@ if ($mform->is_cancelled()) {
 	$message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
 	$message['subject'] = get_string('loggedoutsubject', 'local_contact_form');
 	$message['fromemail'] = $fromform->email;
-	// $message['emailto'] = 'catherine.newman@solent.ac.uk'; // TODO get this from the settings
-	$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
+	// // $message['emailto'] = 'catherine.newman@solent.ac.uk'; // TODO get this from the settings
+	// if 
+	// $message['emailto'] = get_config('local_contact_form' , 'LTUemail');
 
-	print_object($message);
+	// print_object($message);
 
 	create_message($message);
 

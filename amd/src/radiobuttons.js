@@ -9,11 +9,12 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, notificatio
                     // alert("Your are a - " + radioValue);
                     var adviceText = str.get_strings([
                         {key: radioValue,
-                            component: 'local_contact_form',
+                            component: 'local_contact_form'
+                            // param: 'https://passwordreset.microsoftonline.com/'
                             // param: {
-                            //     linkurlpassss: 'https://passwordreset.microsoftonline.com/',
-                            //     linktextpassss: 'Password Self-Service'
-                            // }
+                            //     passwordlink: 'https://passwordreset.microsoftonline.com/',
+                            //     passwordtext: 'Password Self-Service'
+                            // },
                         },
                     ]);
                     // alert(adviceText);
@@ -28,7 +29,7 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, notificatio
                     // alert(M.util.get_string(radioValue, 'local_contact_form'));
                     $.when(adviceText).done(function() {
                         // alert(M.util.get_string(radioValue, 'local_contact_form'));
-                         $('.form-control-static').text(M.util.get_string(radioValue, 'local_contact_form'));
+                         $('.form-control-static').html(M.util.get_string(radioValue, 'local_contact_form'));
                     }).fail(notification.exception);
                }
             });

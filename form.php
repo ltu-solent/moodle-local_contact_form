@@ -80,7 +80,7 @@ class enquiryform extends moodleform {
 
         
 
-        $mform->addElement('static', 'Additional text', get_string('bottomlabel', 'local_contact_form'), get_string('bottomcontent', 'local_contact_form'));
+        $mform->addElement('static', 'Additional text', '', '');
 
 
 
@@ -97,7 +97,7 @@ class enquiryform extends moodleform {
     function validation($data, $files) {
         // return array();
         // $errors = array();
-        print_object($data);
+        // print_object($data);
         $errors = parent::validation($data, $files);
         // if (! course_selected() {
         if (isset($data['querytype_Assessment']) && $data['courselist'] === '0') {
