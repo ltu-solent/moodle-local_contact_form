@@ -68,7 +68,7 @@ if ($mform->is_cancelled()) {
 		$courselist = $fromform->courselist;
 		$courseid = (int)$fromform->courselist;
 	} else {
-		$courselist = "None";
+		$courselist = null;
 	}
 
 // $courseid = (int)$fromform->courselist;
@@ -78,8 +78,10 @@ if ($mform->is_cancelled()) {
 // TODO put the course in the body too
 	$message['body'] = $fromform->comments;
 	$message['body'] .= "\r\n";
-	$message['body'] .= "Course: " . $courselist;
-	$message['body'] .= "\r\n";
+	if($courselist !== null) {
+		$message['body'] .= "Course: " . $courselist;
+		$message['body'] .= "\r\n";
+	}
 	$message['body'] .= "Department: " . $fromform->department;
 	$message['body'] .= "\r\n";
 	$message['body'] .= "IP Address: " . $_SERVER['HTTP_HOST'];
