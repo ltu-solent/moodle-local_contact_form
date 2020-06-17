@@ -92,14 +92,6 @@ if ($mform->is_cancelled()) {
 
 	$message['subject'] = $fromform->querytype;
 
-	// foreach ($fromform as $form=>$values) {
-	// 	if(strpos($form, 'querytype_') !== FALSE ){
- //   			$message['subject'] .= substr($form, strpos($form, "_") + 1)  . ' ';
-	// 	}
-	// }
-// print_object($message);
-
-// TODO set the cc to LTU if it's going to SR
 	if($message['subject'] == 'Assessment_Missing_Dates_Incorrect' || $message['subject'] == 'Unit_leader_enrolment') {
 		$message['emailto'] = get_config('local_contact_form' , 'SRemail') . ', ' . get_config('local_contact_form', 'LTUemail') . ', ' . $message['fromemail'];
 		// $message['cc'] = 	$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
@@ -151,6 +143,7 @@ if ($mform->is_cancelled()) {
 	$message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
 	$message['subject'] = get_string('loggedoutsubject', 'local_contact_form');
 	$message['fromemail'] = $fromform->email;
+	message['emailto'] = get_config('local_contact_form' , 'LTUemail') . ', ' . $message['fromemail'];
 	// // $message['emailto'] = 'catherine.newman@solent.ac.uk'; // TODO get this from the settings
 	// if 
 	// $message['emailto'] = get_config('local_contact_form' , 'LTUemail');
