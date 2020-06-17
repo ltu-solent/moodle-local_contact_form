@@ -143,7 +143,7 @@ if ($mform->is_cancelled()) {
 	$message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
 	$message['subject'] = get_string('loggedoutsubject', 'local_contact_form');
 	$message['fromemail'] = $fromform->email;
-	message['emailto'] = get_config('local_contact_form' , 'LTUemail') . ', ' . $message['fromemail'];
+	$message['emailto'] = get_config('local_contact_form' , 'LTUemail') . ', ' . $message['fromemail'];
 	// // $message['emailto'] = 'catherine.newman@solent.ac.uk'; // TODO get this from the settings
 	// if 
 	// $message['emailto'] = get_config('local_contact_form' , 'LTUemail');
