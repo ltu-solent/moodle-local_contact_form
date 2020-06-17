@@ -100,20 +100,16 @@ if ($mform->is_cancelled()) {
 // print_object($message);
 
 // TODO set the cc to LTU if it's going to SR
-	if($message['subject'] == 'Assessment link missing/dates incorrect' || $message['subject'] == 'Unit_leader_enrolment') {
-		$message['emailto'] = get_config('local_contact_form' , 'SRemail');
-		$message['cc'] = 	$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
+	if($message['subject'] == 'Assessment_Missing_Dates_Incorrect' || $message['subject'] == 'Unit_leader_enrolment') {
+		$message['emailto'] = get_config('local_contact_form' , 'SRemail') . ', ' . get_config('local_contact_form', 'LTUemail') . ', ' . $message['fromemail'];
+		// $message['cc'] = 	$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
 
 	} else {
 
-		// if($message['subject'])
-
-
-		$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
-		$message['cc'] ='';
-
+		$message['emailto'] = get_config('local_contact_form' , 'LTUemail') . ', ' . $message['fromemail'];
+		// $message['cc'] = 	$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
 	}
-	// print_object($message);
+	print_object($message);
 //
 	create_message($message);
 	// print_object($message);
