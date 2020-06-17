@@ -109,7 +109,7 @@ if ($mform->is_cancelled()) {
 		$message['emailto'] = get_config('local_contact_form' , 'LTUemail') . ', ' . $message['fromemail'];
 		// $message['cc'] = 	$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
 	}
-	print_object($message);
+	// print_object($message);
 //
 	create_message($message);
 	// print_object($message);
