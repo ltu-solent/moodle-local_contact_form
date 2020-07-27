@@ -25,15 +25,14 @@
 // get user type (staff or student)
 
 function get_user_type() {
-	global $DB, $USER;
-	$department = $DB->get_record_sql("SELECT department from {user} WHERE id = ?", array($USER->id));
+  global $DB, $USER;
+  $department = $DB->get_record_sql("SELECT department from {user} WHERE id = ?", array($USER->id));
 
-	return $department->department;
+  return $department->department;
 }
 
 
 // get student courses
-// TODO rename this
 
 function get_student_courses(){
   global $DB, $USER;
@@ -53,12 +52,12 @@ function get_student_courses(){
 
 function create_message($message) {
   // print_object($message);
-	$messagebody = $message['body'];
-	$to = $message['emailto'];
-	$subject = $message['subject'];
-// 	$subject = $message['courseid' . ' ' . $message['coursename']];
+  $messagebody = $message['body'];
+  $to = $message['emailto'];
+  $subject = $message['subject'];
+//  $subject = $message['courseid' . ' ' . $message['coursename']];
 
-	$headers = "From: " . $message['fromemail'] . "\r\n";
-	mail($to, $subject, $messagebody, $headers);
+  $headers = "From: " . $message['fromemail'] . "\r\n";
+  mail($to, $subject, $messagebody, $headers);
 
 }

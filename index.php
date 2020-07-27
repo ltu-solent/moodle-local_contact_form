@@ -39,142 +39,101 @@ $PAGE->set_heading(get_string('pluginname', 'local_contact_form'));
 
 echo $OUTPUT->header();
 
-// var_dump($_SERVER); // get the http_referrer, ip address from here
-        // TODO make 2 separate forms for students and staff
-        // check here if the're staff or student and display the appropriate form
-// look at apprenticeoffjob edit and delete forms
-// load in index.php
-//call to user table -> department
-
-// either student or academic - staff may be more generic
-
-// Find out if they're a student
-
-// if they are,
-
 // Instantiate the studentform
 if (isloggedin() && $USER->id != 1) {
-$mform = new enquiryform();
+    $mform = new enquiryform();
 
-//Form processing and displaying is done here
-if ($mform->is_cancelled()) {
-    //Handle form cancel operation, if cancel button is present on form
-} else if ($fromform = $mform->get_data()) {
-  //In this case you process validated data. $mform->get_data() returns data posted in form.
+    //Form processing and displaying is done here
+    if ($mform->is_cancelled()) {
+        //Handle form cancel operation, if cancel button is present on form
+    } else if ($fromform = $mform->get_data()) {
+        //In this case you process validated data. $mform->get_data() returns data posted in form.
 
-	// TODO move this all into locallib
+        if(isset($fromform->courselist)) {
+            $courselist = $fromform->courselist;
+            $courseid = (int)$fromform->courselist;
+        } else {
+            $courselist = null;
+        }
 
-	if(isset($fromform->courselist)) {
-		$courselist = $fromform->courselist;
-		$courseid = (int)$fromform->courselist;
-	} else {
-		$courselist = null;
-	}
+        $message['body'] = $fromform->comments;
+        $message['body'] .= "\r\n";
+        if($courselist !== null) {
+            $message['body'] .= "Course: " . $courselist;
+            $message['body'] .= "\r\n";
+        }
+        $message['body'] .= "Department: " . $fromform->department;
+        $message['body'] .= "\r\n";
+        $message['body'] .= "IP Address: " . $_SERVER['HTTP_HOST'];
+        $message['body'] .= "\r\n";
+        $message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
+        $message['subject'] = "";
+        $message['fromemail'] = $USER->email;
 
-// $courseid = (int)$fromform->courselist;
+        //get which boxes are checked
 
-// print_object($fromform);
-	// $message['body'] =
-// TODO put the course in the body too
-	$message['body'] = $fromform->comments;
-	$message['body'] .= "\r\n";
-	if($courselist !== null) {
-		$message['body'] .= "Course: " . $courselist;
-		$message['body'] .= "\r\n";
-	}
-	$message['body'] .= "Department: " . $fromform->department;
-	$message['body'] .= "\r\n";
-	$message['body'] .= "IP Address: " . $_SERVER['HTTP_HOST'];
-	$message['body'] .= "\r\n";
-	$message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
-	$message['subject'] = "";
-	$message['fromemail'] = $USER->email;
+        $message['subject'] = $fromform->querytype;
 
-//get which boxes are checked
+        if($message['subject'] == 'Assessment_Missing_Dates_Incorrect' || $message['subject'] == 'Unit_leader_enrolment') {
+            $message['emailto'] = get_config('local_contact_form' , 'SRemail') . ', ' . get_config('local_contact_form', 'LTUemail') . ', ' . $message['fromemail'];
 
-	$message['subject'] = $fromform->querytype;
+        } else {
 
-	if($message['subject'] == 'Assessment_Missing_Dates_Incorrect' || $message['subject'] == 'Unit_leader_enrolment') {
-		$message['emailto'] = get_config('local_contact_form' , 'SRemail') . ', ' . get_config('local_contact_form', 'LTUemail') . ', ' . $message['fromemail'];
-		// $message['cc'] = 	$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
+            $message['emailto'] = get_config('local_contact_form' , 'LTUemail') . ', ' . $message['fromemail'];
+        }
+        create_message($message);
+        redirect($CFG->wwwroot. '/local/contact_form/index.php', get_string('messagesent', 'local_contact_form'), 15);
 
-	} else {
+    } else {
+        // this branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
+        // or on the first display of the form.
 
-		$message['emailto'] = get_config('local_contact_form' , 'LTUemail') . ', ' . $message['fromemail'];
-		// $message['cc'] = 	$message['emailto'] = get_config('local_contact_form' , 'LTUemail');
-	}
-	// print_object($message);
-//
-	create_message($message);
-	// print_object($message);
-
-	// TODO decide where to redirect to
-	redirect($CFG->wwwroot. '/local/contact_form/index.php', get_string('messagesent', 'local_contact_form'), 15);
-
-} else {
-  // this branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
-  // or on the first display of the form.
-
-  //Set default data (if any)
-	$toform = "";
-  $mform->set_data($toform);
-  //displays the form
-  $mform->display();
-}
+        //Set default data (if any)
+        $toform = "";
+        $mform->set_data($toform);
+        //displays the form
+        $mform->display();
+    }
 } else { // display the logged out form
 
-	$mform = new loggedoutform();
+    $mform = new loggedoutform();
 
-	//Form processing and displaying is done here
-	if ($mform->is_cancelled()) {
-	    //Handle form cancel operation, if cancel button is present on form
-	} else if ($fromform = $mform->get_data()) {
-//print_object($fromform);
-	// print_object($message);
+    //Form processing and displaying is done here
+    if ($mform->is_cancelled()) {
+        //Handle form cancel operation, if cancel button is present on form
+    } else if ($fromform = $mform->get_data()) {
 
-	$message['body'] = $fromform->description;
-	$message['body'] .= "\r\n";
-	$message['body'] .= "Name: " . $fromform->name;
-	$message['body'] .= "\r\n";
-	$message['body'] .= "Email: " . $fromform->email;
-	$message['body'] .= "\r\n";
-	$message['body'] .= "Phone: " . $fromform->phone;
-	$message['body'] .= "\r\n";
-	$message['body'] .= "IP Address: " . $_SERVER['REMOTE_ADDR'];
-	$message['body'] .= "\r\n";
-	$message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
-	$message['subject'] = get_string('loggedoutsubject', 'local_contact_form');
-	$message['fromemail'] = $fromform->email;
-	$message['emailto'] = get_config('local_contact_form' , 'SHemail') . ', ' . $message['fromemail'];
-	// // $message['emailto'] = 'catherine.newman@solent.ac.uk'; // TODO get this from the settings
-	// if 
-	// $message['emailto'] = get_config('local_contact_form' , 'LTUemail');
-
-	// print_object($message);
-
-	create_message($message);
-
-	// TODO decide where to redirect to
-	redirect($CFG->wwwroot. '/local/contact_form/index.php', get_string('messagesent', 'local_contact_form'), 15);
-
-	  //In this case you process validated data. $mform->get_data() returns data posted in form.
-	} else {
-	  // this branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
-	  // or on the first display of the form.
-
-	  //Set default data (if any)
-		// $toform="";
-	  // $mform->set_data($fromform);
-	  //displays the form
-	  $mform->display();
-	}
+    $message['body'] = $fromform->description;
+    $message['body'] .= "\r\n";
+    $message['body'] .= "Name: " . $fromform->name;
+    $message['body'] .= "\r\n";
+    $message['body'] .= "Email: " . $fromform->email;
+    $message['body'] .= "\r\n";
+    $message['body'] .= "Phone: " . $fromform->phone;
+    $message['body'] .= "\r\n";
+    $message['body'] .= "IP Address: " . $_SERVER['REMOTE_ADDR'];
+    $message['body'] .= "\r\n";
+    $message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
+    $message['subject'] = get_string('loggedoutsubject', 'local_contact_form');
+    $message['fromemail'] = $fromform->email;
+    $message['emailto'] = get_config('local_contact_form' , 'LTUemail') . ', ' . $message['fromemail'];
 
 
+    create_message($message);
+
+    // TODO decide where to redirect to
+    redirect($CFG->wwwroot. '/local/contact_form/index.php', get_string('messagesent', 'local_contact_form'), 15);
+
+      //In this case you process validated data. $mform->get_data() returns data posted in form.
+    } else {
+      // this branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
+      // or on the first display of the form.
+
+      //Set default data (if any)
+        // $toform="";
+      // $mform->set_data($fromform);
+      //displays the form
+      $mform->display();
+    }
 }
-
-
-
-
-
-
 echo $OUTPUT->footer();

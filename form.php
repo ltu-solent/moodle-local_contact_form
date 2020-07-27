@@ -38,8 +38,6 @@ class enquiryform extends moodleform {
 
 // Check if they're logged in, if not do the non logged in form
 
-        // TODO store this in a variable
-
         $usertype = get_user_type();
 
         if($usertype == 'student'){
@@ -65,10 +63,10 @@ class enquiryform extends moodleform {
         $mform->addGroup($radioarray, 'radioar', 'Query type:', array(' '), false);
    
         if($usertype == 'student'){
-        	$coursenames = array();
+            $coursenames = array();
             $courses = get_student_courses();
             foreach ($courses as $course => $data) {
-        	   $coursenames[$data->shortname] = $data->fullname;
+               $coursenames[$data->shortname] = $data->fullname;
             }
             array_unshift($coursenames , 'Select');
 
@@ -108,10 +106,6 @@ class enquiryform extends moodleform {
 // return $errors;
 
 
-        // print_object($data);
-
-
-        // die();// if($data[''])
     }
 
 
