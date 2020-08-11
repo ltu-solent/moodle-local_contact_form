@@ -61,7 +61,8 @@ class enquiryform extends moodleform {
         }
 
         $mform->addGroup($radioarray, 'radioar', 'Query type:', array(' '), false);
-   
+        $mform->addRule('radioar', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);   
+
         if($usertype == 'student'){
             $coursenames = array();
             $courses = get_student_courses();
