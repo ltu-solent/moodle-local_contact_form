@@ -45,7 +45,7 @@ function get_student_courses(){
                                   WHERE ue.status = 0 AND e.status = 0 AND ue.timestart < UNIX_TIMESTAMP()
                                   AND (ue.timeend = 0 OR ue.timeend > UNIX_TIMESTAMP())
                                   AND ue.userid = ?
-                                  AND cc.name ='Course pages' OR cc.name = 'module pages'" , array($USER->id, $USER->id));
+                                  AND cc.idnumber LIKE 'courses_%' OR cc.idnumber LIKE 'modules_%'" , array($USER->id, $USER->id));
   return $courses;
 }
 
