@@ -1,5 +1,12 @@
 <?php
 
+$string['additionaldata'] = 'Additional data';
+$string['additionaldata_desc'] = 'When you submit this form, your IP address and information ' .
+	'about your device and operating system will also be sent. This will help us diagnose technical issues, if relevant. ' .
+	'By clicking "Send query" you agree to this.';
+$string['browsercheck'] = 'Browser check';
+$string['browserinfo'] = '<p>You are using {$a->browser} on {$a->os} {$a->devicetype}</p>';
+
 $string['pluginname'] = 'Contact Form';
 $string['bottomcontent'] = 'This is the content we want to show at the bottom of the page';
 $string['bottomlabel'] = 'Label for bottom content';
@@ -72,3 +79,4 @@ $string['passwordlink'] = 'https://passwordreset.microsoftonline.com/';
 $string['passwordtext'] = 'Password Self-Service';
 $string['unitytext'] = 'UNITY';
 $string['unityurl'] = 'http://unity.solent.ac.uk';
+$string['unknown'] = 'Unknown';

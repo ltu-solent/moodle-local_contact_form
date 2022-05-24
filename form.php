@@ -23,9 +23,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
+defined('MOODLE_INTERNAL') || die();
 require_once("$CFG->libdir/formslib.php");
-
 
 
 class enquiryform extends moodleform {
@@ -61,7 +60,7 @@ class enquiryform extends moodleform {
         }
 
         $mform->addGroup($radioarray, 'radioar', 'Query type:', array(' '), false);
-        $mform->addRule('radioar', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);   
+        $mform->addRule('radioar', get_string('required', 'local_contact_form'), 'required', null, 'client', 1, 0);
 
         if($usertype == 'student'){
             $coursenames = array();
@@ -75,19 +74,16 @@ class enquiryform extends moodleform {
 
         }
 
-        // Add a static element to display information
-
-        
-
-        $mform->addElement('static', 'Additional text', '', '');
-
-
-
+        // Add a static element to display information.
+        $mform->addElement('static', 'Additional text', '', '<div id="querytypehelp"></div>');
 
         // Add comments section
         $mform->addElement('textarea', 'comments', get_string('description', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
         $mform->addRule('comments', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
         $mform->addRule('comments', get_string('minlength', 'local_contact_form'), 'minlength', 20, 'client');
+
+        $mform->addElement('static', 'additionaldata', new lang_string('additionaldata', 'local_contact_form'),
+            new lang_string('additionaldata_desc', 'local_contact_form'));
 
         $this->add_action_buttons($cancel=true, $submitlabel=get_string('savechanges', 'local_contact_form'));
 
@@ -148,6 +144,9 @@ class loggedoutform extends moodleform {
         $mform->addRule('description', get_string('minlength', 'local_contact_form'), 'minlength', 20, 'client');
 
         $mform->addElement('recaptcha', 'recaptcha_element', 'RECAPTCHA');
+
+        $mform->addElement('static', 'additionaldata', new lang_string('additionaldata', 'local_contact_form'),
+            new lang_string('additionaldata_desc', 'local_contact_form'));
 
         // add the send button
         $this->add_action_buttons($cancel=true, $submitlabel=get_string('savechanges', 'local_contact_form'));

@@ -59,5 +59,4 @@ function create_message($message) {
 
   $headers = "From: " . $message['fromemail'] . "\r\n";
   mail($to, $subject, $messagebody, $headers);
-
 }

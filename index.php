@@ -27,6 +27,9 @@ require_once('../../config.php');
 require_once("$CFG->libdir/formslib.php");
 require_once('locallib.php');
 require_once('form.php');
+if (!class_exists('WhichBrowser\Parser')) {
+    require_once($CFG->dirroot . '/local/contact_form/vendor/autoload.php');
+}
 
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url('/local/contact_form/index.php');
@@ -67,6 +70,17 @@ if (isloggedin() && $USER->id != 1) {
         $message['body'] .= "IP Address: " . $_SERVER['HTTP_HOST'];
         $message['body'] .= "\r\n";
         $message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
+        $message['body'] .= "\r\n";
+
+        $result = new WhichBrowser\Parser(getallheaders());
+        $message['body'] .= get_string('browserinfo', 'local_contact_form', (object)[
+            'browser' => $result->browser->toString(),
+            'browserversion' => $result->browser->getVersion(),
+            'devicetype' => $result->device->type,
+            'os' => $result->os->toString()
+        ]);
+        $message['body'] .= "\r\n";
+
         $message['subject'] = "";
         $message['fromemail'] = $USER->email;
 

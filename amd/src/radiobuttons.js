@@ -11,7 +11,7 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, notificatio
                        },
                     ]);
                     $.when(adviceText).done(function() {
-                         $('.form-control-static').html(M.util.get_string(radioValue, 'local_contact_form'));
+                         $('#querytypehelp').html(M.util.get_string(radioValue, 'local_contact_form'));
                     }).fail(notification.exception);
                }
             });
