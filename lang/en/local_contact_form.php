@@ -5,7 +5,7 @@ $string['additionaldata_desc'] = 'When you submit this form, your IP address and
 	'about your device and operating system will also be sent. This will help us diagnose technical issues, if relevant. ' .
 	'By clicking "Send query" you agree to this.';
 $string['browsercheck'] = 'Browser check';
-$string['browserinfo'] = '<p>You are using {$a->browser} on {$a->os} {$a->devicetype}</p>';
+$string['browserinfo'] = 'You are using {$a->browser} on {$a->os} {$a->devicetype}.';
 
 $string['pluginname'] = 'Contact Form';
 $string['bottomcontent'] = 'This is the content we want to show at the bottom of the page';

@@ -40,11 +40,11 @@ $PAGE->set_heading(get_string('browsercheck', 'local_contact_form'));
 echo $OUTPUT->header();
 
 $result = new WhichBrowser\Parser(getallheaders());
-echo get_string('browserinfo', 'local_contact_form', (object)[
+echo '<p>' . get_string('browserinfo', 'local_contact_form', (object)[
     'browser' => $result->browser->toString(),
     'browserversion' => $result->browser->getVersion(),
     'devicetype' => $result->device->type,
     'os' => $result->os->toString()
-]);
+]) . '</p>';
 
 echo $OUTPUT->footer();
