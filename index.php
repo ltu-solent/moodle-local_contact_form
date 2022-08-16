@@ -128,6 +128,16 @@ if (isloggedin() && $USER->id != 1) {
     $message['body'] .= "IP Address: " . $_SERVER['REMOTE_ADDR'];
     $message['body'] .= "\r\n";
     $message['body'] .= "Referring Page: " . $_SERVER["HTTP_REFERER"];
+
+    $result = new WhichBrowser\Parser(getallheaders());
+        $message['body'] .= get_string('browserinfo', 'local_contact_form', (object)[
+            'browser' => $result->browser->toString(),
+            'browserversion' => $result->browser->getVersion(),
+            'devicetype' => $result->device->type,
+            'os' => $result->os->toString()
+        ]);
+        $message['body'] .= "\r\n";
+
     $message['subject'] = get_string('loggedoutsubject', 'local_contact_form');
     $message['fromemail'] = $fromform->email;
     $message['emailto'] = get_config('local_contact_form' , 'LTUemail') . ', ' . $message['fromemail'];
