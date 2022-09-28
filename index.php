@@ -40,13 +40,12 @@ global $PAGE, $USER, $CFG;
 
 $PAGE->set_heading(get_string('pluginname', 'local_contact_form'));
 
-echo $OUTPUT->header();
-
 // Instantiate the studentform.
 if (isloggedin() && $USER->id != 1) {
     $mform = new enquiryform();
-
-    if ($fromform = $mform->get_data()) {
+    if ($mform->is_cancelled()) {
+        redirect($CFG->wwwroot);
+    } else if ($fromform = $mform->get_data()) {
         if (isset($fromform->courselist)) {
             $courselist = $fromform->courselist;
             $courseid = (int)$fromform->courselist;
@@ -92,9 +91,10 @@ if (isloggedin() && $USER->id != 1) {
         \local_contact_form\create_message($message);
         redirect($CFG->wwwroot. '/local/contact_form/index.php', get_string('messagesent', 'local_contact_form'), 15);
 
-    } else if (!$mform->is_cancelled()) {
+    } else {
         // This branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
         // or on the first display of the form.
+        echo $OUTPUT->header();
         $toform = "";
         $mform->set_data($toform);
         $mform->display();
@@ -102,7 +102,9 @@ if (isloggedin() && $USER->id != 1) {
 } else {
     // Display the logged out form.
     $mform = new loggedoutform();
-    if ($fromform = $mform->get_data()) {
+    if ($mform->is_cancelled()) {
+        redirect($CFG->wwwroot);
+    } else if ($fromform = $mform->get_data()) {
         $message['body'] = $fromform->description;
         $message['body'] .= "\r\n";
         $message['body'] .= "Name: " . $fromform->name;
@@ -129,7 +131,8 @@ if (isloggedin() && $USER->id != 1) {
         $message['emailto'] = get_config('local_contact_form' , 'LTUemail') . ', ' . $message['fromemail'];
         \local_contact_form\create_message($message);
         redirect($CFG->wwwroot. '/local/contact_form/index.php', get_string('messagesent', 'local_contact_form'), 15);
-    } else if (!$mform->is_cancelled()) {
+    } else {
+        echo $OUTPUT->header();
         $mform->display();
     }
 }

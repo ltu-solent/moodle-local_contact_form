@@ -43,20 +43,21 @@ $string['erremail'] = 'Must be a vaild email address';
 $string['errnumeric'] = 'Must be a number';
 $string['errselected'] = 'Please select a course/module';
 $string['loggedoutsubject'] = 'Logged out enquiry';
-$string['loggedoutinfotext'] = 'Students: If your query relates to: <br>' .
-    'Questions about your course <br>' .
-    'Wellbeing <br>' .
-    'Student funding questions <br>' .
-    'To whom it may concern letters, <br>' .
-    'Council tax exemption certificates <br>' .
-    'Bank letters <br>' .
-    'Replacement campus cards <br>' .
-    'References <br>' .
-    'Advice on regulations, processes and policy, please contact the Student Hub. <br>' .
-    'Email: <a href=mailto:"{$a->linkemail}">{$a->linkemail}</a> Telephone: 023 8201 5200 <br>' .
-    '<br>' .
-    'Staff: If your query relates to account issues,  software requests or classroom or desktop hardware, ' .
-    'please contact ICT through <a href="{$a->linkurl}">{$a->linktext}</a>';
+$string['loggedoutinfotext'] = '<p><strong>Students:</strong> If your query relates to:</p>' .
+    '<ul>' .
+    '<li>Questions about your course</li>' .
+    '<li>Wellbeing</li>' .
+    '<li>Student funding questions</li>' .
+    '<li>To whom it may concern letters,</li>' .
+    '<li>Council tax exemption certificates</li>' .
+    '<li>Bank letters</li>' .
+    '<li>Replacement campus cards</li>' .
+    '<li>References</li>' .
+    '<li>Advice on regulations, processes and policy</li>' .
+    '</ul>' .
+    '<p>Please contact Student Hub. Email: <a href=mailto:"{$a->linkemail}">{$a->linkemail}</a> Telephone: 023 8201 5200</p>' .
+    '<p><strong>Staff:</strong> If your query relates to account issues,  software requests or classroom or desktop hardware, ' .
+    'please contact ICT through <a href="{$a->linkurl}">{$a->linktext}</a></p>';
 
 $string['loggedoutinfotext_label'] = "Helpful information";
 $string['messagesent'] = 'Your message has been sent. You will receive a copy by email';
