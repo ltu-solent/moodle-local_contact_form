@@ -26,8 +26,8 @@
 require_once('../../config.php');
 // phpcs:enable
 require_once($CFG->libdir . "/formslib.php");
-require_once($CFG->dirroot . 'local/contact_form/locallib.php');
-require_once($CFG->dirroot . 'local/contact_form/form.php');
+require_once($CFG->dirroot . '/local/contact_form/locallib.php');
+require_once($CFG->dirroot . '/local/contact_form/form.php');
 if (!class_exists('WhichBrowser\Parser')) {
     require_once($CFG->dirroot . '/local/contact_form/vendor/autoload.php');
 }
