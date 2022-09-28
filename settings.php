@@ -30,5 +30,4 @@ $settings->add(new admin_setting_configtext('local_contact_form/LTUemail', 'LTU 
 $settings->add(new admin_setting_configtext('local_contact_form/SRemail', 'Student Registry email address', '', ''));
 $settings->add(new admin_setting_configtext('local_contact_form/SHemail', 'Student Hub email address', '', ''));
 
-
 $ADMIN->add('localplugins', $settings);

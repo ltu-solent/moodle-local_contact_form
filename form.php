@@ -17,8 +17,7 @@
 /**
  * Contact Form
  *
- * @package    local
- * @subpackage contact_form
+ * @package    local_contact_form
  * @copyright  2020 onwards Solent University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,47 +25,55 @@
 defined('MOODLE_INTERNAL') || die();
 require_once("$CFG->libdir/formslib.php");
 
-
+/**
+ * Enquiry form for logged in users
+ */
 class enquiryform extends moodleform {
-    //Add elements to formif
+    /**
+     * Form definitions
+     *
+     * @return void
+     */
     public function definition() {
         global $CFG, $USER, $DB, $PAGE;
         $PAGE->requires->js_call_amd('local_contact_form/radiobuttons', 'init');
-
-
-
-// Check if they're logged in, if not do the non logged in form
-
-        $usertype = get_user_type();
-
-        if($usertype == 'student'){
-
-            $querytypes = array("Access/account/password"=>"Access/account/password", "Assessment"=>"Assessment", "Enrollment"=>"Enrollment", "Student_Other"=>"Other");
-        } else { // for now, they're staff
-            $querytypes = array("Assessment_Missing_Dates_Incorrect"=>"Assessment link missing/dates incorrect", "Assessment_Other"=>"Assessment other", "Unit_leader_enrolment"=>"Unit leader enrolment", "Staff_Other"=>"Other");
+        // Check if they're logged in, if not do the non logged in form.
+        $usertype = \local_contact_form\get_user_type();
+        if ($usertype == 'student') {
+            $querytypes = [
+                "Access/account/password" => "Access/account/password",
+                "Assessment" => "Assessment",
+                "Enrollment" => "Enrollment",
+                "Student_Other" => "Other"
+            ];
+        } else {
+            // They're staff.
+            $querytypes = [
+                "Assessment_Missing_Dates_Incorrect" => "Assessment link missing/dates incorrect",
+                "Assessment_Other" => "Assessment other",
+                "Unit_leader_enrolment" => "Unit leader enrolment",
+                "Staff_Other" => "Other"
+            ];
         }
 
-        // start the form
-        $mform = $this->_form; // Don't forget the underscore!
-        $checkarray=array();
+        $mform = $this->_form;
+        // Store the department in a hidden field.
+        $mform->addElement('hidden', 'department', $usertype);
+        $mform->setType('department', PARAM_ALPHANUMEXT);
 
-        // store the department in a hidden field
-        $mform->addElement('hidden','department', $usertype);
-        $mform->setType('department', PARAM_RAW );
-
-        foreach($querytypes as $querytype => $q) {
-          // IMPORTANT: add validation and type rules as per documentation
+        foreach ($querytypes as $querytype => $q) {
+            // IMPORTANT: add validation and type rules as per documentation.
             $radioarray[] = $mform->createElement('radio', 'querytype', '', $q, $querytype);
         }
 
         $mform->addGroup($radioarray, 'radioar', 'Query type:', array(' '), false);
         $mform->addRule('radioar', get_string('required', 'local_contact_form'), 'required', null, 'client', 1, 0);
 
-        if($usertype == 'student'){
+        if ($usertype == 'student') {
             $coursenames = array();
-            $courses = get_student_courses();
+            $courses = \local_contact_form\get_student_courses();
             foreach ($courses as $course => $data) {
-               $coursenames[$data->shortname] = $data->fullname;
+                $coursenames[$data->shortname] = $data->fullname;
             }
             array_unshift($coursenames , 'Select');
 
@@ -77,47 +84,54 @@ class enquiryform extends moodleform {
         // Add a static element to display information.
         $mform->addElement('static', 'Additional text', '', '<div id="querytypehelp"></div>');
 
-        // Add comments section
-        $mform->addElement('textarea', 'comments', get_string('description', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
+        // Add comments section.
+        $mform->addElement('textarea', 'comments', get_string('description', 'local_contact_form'),
+            'wrap="virtual" rows="20" cols="50"');
         $mform->addRule('comments', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
         $mform->addRule('comments', get_string('minlength', 'local_contact_form'), 'minlength', 20, 'client');
 
         $mform->addElement('static', 'additionaldata', new lang_string('additionaldata', 'local_contact_form'),
             new lang_string('additionaldata_desc', 'local_contact_form'));
 
-        $this->add_action_buttons($cancel=true, $submitlabel=get_string('savechanges', 'local_contact_form'));
+        $this->add_action_buttons(true, get_string('savechanges', 'local_contact_form'));
 
     }
-    //Custom validation should be added here
-    function validation($data, $files) {
-        // return array();
-        // $errors = array();
-        // print_object($data);
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param array $data array of ("fieldname"=>value) of submitted data
+     * @param array $files array of uploaded files "element_name"=>tmp_file_path
+     * @return array of "element_name"=>"error_description" if there are errors,
+     *         or an empty array if everything is OK (true allowed for backwards compatibility too).
+     */
+    public function validation($data, $files) {
         $errors = parent::validation($data, $files);
-        // if (! course_selected() {
         if (isset($data['querytype_Assessment']) && $data['courselist'] === '0') {
             $errors['querytype_Assessment'] = get_string('errselected', 'local_contact_form');
         }
         return $errors;
-}
-// return $errors;
-
-
     }
+}
 
 
+/**
+ * Form for logged out users
+ */
 class loggedoutform extends moodleform {
-    //Add elements to formif
-    public function definition() {
-        global $CFG, $USER, $DB;
 
-        $a = new stdClass;
+    /**
+     * Form definition
+     *
+     * @return void
+     */
+    public function definition() {
+        $a = new stdClass();
         $a->linktext = get_string('unitytext', 'local_contact_form');
         $a->linkurl = get_string('unityurl', 'local_contact_form');
         $a->linkemail = get_config('local_contact_form' , 'LTUemail');
 
-        // start the form
-        $mform = $this->_form; // Don't forget the underscore!
+        $mform = $this->_form;
         $mform->addElement('text', 'name', get_string('name',  'local_contact_form'));
         $mform->addRule('name', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
         $mform->setType('name', PARAM_TEXT );
@@ -131,15 +145,16 @@ class loggedoutform extends moodleform {
 
         $mform->addElement('text', 'phone', get_string('phone',  'local_contact_form'));
         $mform->setType('phone', PARAM_RAW );
-        // $mform->addRule('phone', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
         $mform->addRule('phone', get_string('errnumeric', 'local_contact_form'), 'numeric', null, 'server', 1, 0);
 
-        // TODO: ask Sarah if this is ok here
-        $mform->addElement('static', 'infotext', get_string('loggedoutinfotext_label', 'local_contact_form'), get_string('loggedoutinfotext', 'local_contact_form', $a));
+        $mform->addElement('static', 'infotext',
+            get_string('loggedoutinfotext_label', 'local_contact_form'),
+            get_string('loggedoutinfotext', 'local_contact_form', $a));
         $mform->setType('infotext', PARAM_TEXT);
 
-        // Add comments section
-        $mform->addElement('textarea', 'description', get_string('description', 'local_contact_form'), 'wrap="virtual" rows="20" cols="50"');
+        // Add comments section.
+        $mform->addElement('textarea', 'description', get_string('description', 'local_contact_form'),
+            'wrap="virtual" rows="20" cols="50"');
         $mform->addRule('description', get_string('required', 'local_contact_form'), 'required', null, 'server', 1, 0);
         $mform->addRule('description', get_string('minlength', 'local_contact_form'), 'minlength', 20, 'client');
 
@@ -148,12 +163,18 @@ class loggedoutform extends moodleform {
         $mform->addElement('static', 'additionaldata', new lang_string('additionaldata', 'local_contact_form'),
             new lang_string('additionaldata_desc', 'local_contact_form'));
 
-        // add the send button
-        $this->add_action_buttons($cancel=true, $submitlabel=get_string('savechanges', 'local_contact_form'));
+        $this->add_action_buttons(true, get_string('savechanges', 'local_contact_form'));
+    }
 
-}
-    //Custom validation should be added here
-    function validation($data, $files) {
+    /**
+     * {@inheritDoc}
+     *
+     * @param array $data array of ("fieldname"=>value) of submitted data
+     * @param array $files array of uploaded files "element_name"=>tmp_file_path
+     * @return array of "element_name"=>"error_description" if there are errors,
+     *         or an empty array if everything is OK (true allowed for backwards compatibility too).
+     */
+    public function validation($data, $files) {
         $errors = parent::validation($data, $files);
         $recaptchaelement = $this->_form->getElement('recaptcha_element');
 
@@ -165,14 +186,13 @@ class loggedoutform extends moodleform {
         } else {
             $errors['recaptcha_element'] = get_string('missingrecaptchachallengefield');
         }
-        foreach($data as $k=>$v){
-            if(strpos($k, 'loggedoutform') !== false){
-                if(floor($v) != $v){
+        foreach ($data as $k => $v) {
+            if (strpos($k, 'loggedoutform') !== false) {
+                if (floor($v) != $v) {
                     $errors[$k] = get_string('errnumeric', 'local_contact_form');
                 }
             }
         }
-
-      return $errors;
+        return $errors;
     }
 }

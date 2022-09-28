@@ -14,49 +14,56 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Contact Form
+ * Contact Form locallib
  *
- * @package    local
- * @subpackage contact_form
+ * @package    local_contact_form
  * @copyright  2020 onwards Solent University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// get user type (staff or student)
+namespace local_contact_form;
 
+/**
+ * Get user type (department field) for current user.
+ *
+ * @return string
+ */
 function get_user_type() {
-  global $DB, $USER;
-  $department = $DB->get_record_sql("SELECT department from {user} WHERE id = ?", array($USER->id));
-
-  return $department->department;
+    global $DB, $USER;
+    $department = $DB->get_field('user', 'department', ['id' => $USER->id]);
+    return $department;
 }
 
 
-// get student courses
-
-function get_student_courses(){
-  global $DB, $USER;
-
-  $courses = $DB->get_records_sql("SELECT DISTINCT e.courseid, c.shortname, c.fullname, c.startdate, c.enddate, cc.name categoryname
-                                  FROM {enrol} e
-                                  JOIN {user_enrolments} ue ON ue.enrolid = e.id AND ue.userid = ?
-                                  JOIN {course} c ON c.id = e.courseid
-                                  JOIN {course_categories} cc ON cc.id = c.category
-                                  WHERE ue.status = 0 AND e.status = 0 AND ue.timestart < UNIX_TIMESTAMP()
-                                  AND (ue.timeend = 0 OR ue.timeend > UNIX_TIMESTAMP())
-                                  AND ue.userid = ?
-                                  AND cc.idnumber LIKE 'courses_%' OR cc.idnumber LIKE 'modules_%'" , array($USER->id, $USER->id));
-  return $courses;
+/**
+ * Get student courses for current user
+ * @return array Course list
+ */
+function get_student_courses() {
+    global $DB, $USER;
+    $courses = $DB->get_records_sql(
+        "SELECT DISTINCT e.courseid, c.shortname, c.fullname, c.startdate, c.enddate, cc.name categoryname
+        FROM {enrol} e
+        JOIN {user_enrolments} ue ON ue.enrolid = e.id AND ue.userid = ?
+        JOIN {course} c ON c.id = e.courseid
+        JOIN {course_categories} cc ON cc.id = c.category
+        WHERE ue.status = 0 AND e.status = 0 AND ue.timestart < UNIX_TIMESTAMP()
+        AND (ue.timeend = 0 OR ue.timeend > UNIX_TIMESTAMP())
+        AND ue.userid = ?
+        AND cc.idnumber LIKE 'courses_%' OR cc.idnumber LIKE 'modules_%'", array($USER->id, $USER->id));
+    return $courses;
 }
 
-
+/**
+ * Create message
+ *
+ * @param array $message fields including body, emailto, subject and fromemail
+ * @return void
+ */
 function create_message($message) {
-  // print_object($message);
-  $messagebody = $message['body'];
-  $to = $message['emailto'];
-  $subject = $message['subject'];
-//  $subject = $message['courseid' . ' ' . $message['coursename']];
-
-  $headers = "From: " . $message['fromemail'] . "\r\n";
-  mail($to, $subject, $messagebody, $headers);
+    $messagebody = $message['body'];
+    $to = $message['emailto'];
+    $subject = $message['subject'];
+    $headers = "From: " . $message['fromemail'] . "\r\n";
+    mail($to, $subject, $messagebody, $headers);
 }
