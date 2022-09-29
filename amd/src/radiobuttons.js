@@ -1,10 +1,9 @@
 define(['jquery', 'core/str', 'core/notification'], function($, str, notification) {
-
     return {
         init: function() {
-            $("input[name='querytype']").click(function(){
+            $("input[name='querytype']").click(function() {
                 var radioValue = $("input[name='querytype']:checked").val();
-                if(radioValue){
+                if (radioValue) {
                     var adviceText = str.get_strings([
                         {key: radioValue,
                             component: 'local_contact_form'
