@@ -25,9 +25,10 @@
 defined('MOODLE_INTERNAL') || die;
 
 $settings = new admin_settingpage('local_contact_form', new lang_string('pluginname', 'local_contact_form'));
+if ($hassiteconfig) {
+    $settings->add(new admin_setting_configtext('local_contact_form/LTUemail', 'LTU email address', '', ''));
+    $settings->add(new admin_setting_configtext('local_contact_form/SRemail', 'Student Registry email address', '', ''));
+    $settings->add(new admin_setting_configtext('local_contact_form/SHemail', 'Student Hub email address', '', ''));
 
-$settings->add(new admin_setting_configtext('local_contact_form/LTUemail', 'LTU email address', '', ''));
-$settings->add(new admin_setting_configtext('local_contact_form/SRemail', 'Student Registry email address', '', ''));
-$settings->add(new admin_setting_configtext('local_contact_form/SHemail', 'Student Hub email address', '', ''));
-
-$ADMIN->add('localplugins', $settings);
+    $ADMIN->add('localplugins', $settings);
+}
