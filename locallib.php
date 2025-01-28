@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * Contact Form locallib
  *
@@ -50,7 +51,7 @@ function get_student_courses() {
         WHERE ue.status = 0 AND e.status = 0 AND ue.timestart < UNIX_TIMESTAMP()
         AND (ue.timeend = 0 OR ue.timeend > UNIX_TIMESTAMP())
         AND ue.userid = ?
-        AND cc.idnumber LIKE 'courses_%' OR cc.idnumber LIKE 'modules_%'", array($USER->id, $USER->id));
+        AND cc.idnumber LIKE 'courses_%' OR cc.idnumber LIKE 'modules_%'", [$USER->id, $USER->id]);
     return $courses;
 }
 

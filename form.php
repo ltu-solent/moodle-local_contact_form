@@ -44,7 +44,7 @@ class enquiryform extends moodleform {
                 "Access/account/password" => "Access/account/password",
                 "Assessment" => "Assessment",
                 "Enrollment" => "Enrollment",
-                "Student_Other" => "Other"
+                "Student_Other" => "Other",
             ];
         } else {
             // They're staff.
@@ -52,7 +52,7 @@ class enquiryform extends moodleform {
                 "Assessment_Missing_Dates_Incorrect" => "Assessment link missing/dates incorrect",
                 "Assessment_Other" => "Assessment other",
                 "Unit_leader_enrolment" => "Unit leader enrolment",
-                "Staff_Other" => "Other"
+                "Staff_Other" => "Other",
             ];
         }
 
@@ -66,11 +66,11 @@ class enquiryform extends moodleform {
             $radioarray[] = $mform->createElement('radio', 'querytype', '', $q, $querytype);
         }
 
-        $mform->addGroup($radioarray, 'radioar', 'Query type:', array(' '), false);
+        $mform->addGroup($radioarray, 'radioar', 'Query type:', [' '], false);
         $mform->addRule('radioar', get_string('required', 'local_contact_form'), 'required', null, 'client', 1, 0);
 
         if ($usertype == 'student') {
-            $coursenames = array();
+            $coursenames = [];
             $courses = \local_contact_form\get_student_courses();
             foreach ($courses as $course => $data) {
                 $coursenames[$data->shortname] = $data->fullname;

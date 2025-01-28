@@ -71,7 +71,7 @@ if (isloggedin() && $USER->id != 1) {
             'browser' => $result->browser->toString(),
             'browserversion' => $result->browser->getVersion(),
             'devicetype' => $result->device->type,
-            'os' => $result->os->toString()
+            'os' => $result->os->toString(),
         ]);
         $message['body'] .= "\r\n";
 
@@ -122,7 +122,7 @@ if (isloggedin() && $USER->id != 1) {
             'browser' => $result->browser->toString(),
             'browserversion' => $result->browser->getVersion(),
             'devicetype' => $result->device->type,
-            'os' => $result->os->toString()
+            'os' => $result->os->toString(),
         ]);
         $message['body'] .= "\r\n";
 

@@ -44,7 +44,7 @@ echo '<p>' . get_string('browserinfo', 'local_contact_form', (object)[
     'browser' => $result->browser->toString(),
     'browserversion' => $result->browser->getVersion(),
     'devicetype' => $result->device->type,
-    'os' => $result->os->toString()
+    'os' => $result->os->toString(),
 ]) . '</p>';
 
 echo $OUTPUT->footer();
